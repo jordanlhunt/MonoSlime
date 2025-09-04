@@ -360,11 +360,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\DungeonSlime\\DungeonSlime.csproj",
+      "projectUniqueName": "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\DungeonSlime\\DungeonSlime.csproj",
       "projectName": "DungeonSlime",
-      "projectPath": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\DungeonSlime\\DungeonSlime.csproj",
+      "projectPath": "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\DungeonSlime\\DungeonSlime.csproj",
       "packagesPath": "C:\\Users\\jorda\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\DungeonSlime\\obj\\",
+      "outputPath": "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\DungeonSlime\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -383,8 +383,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {
-              "projectPath": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj"
+            "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {
+              "projectPath": "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj"
             }
           }
         }

@@ -29,3 +29,6 @@ c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\obj\Debug\net
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\obj\Debug\net8.0\DungeonSlime.pdb
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\obj\Debug\net8.0\DungeonSlime.genruntimeconfig.cache
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\obj\Debug\net8.0\ref\DungeonSlime.dll
+c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\MonoGameLibrary.dll
+c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\MonoGameLibrary.pdb
+c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\obj\Debug\net8.0\DungeonSlime.sourcelink.json

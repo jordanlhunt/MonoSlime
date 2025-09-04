@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {}
+    "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {
+    "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj",
+        "projectUniqueName": "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj",
         "projectName": "MonoGameLibrary",
-        "projectPath": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj",
+        "projectPath": "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj",
         "packagesPath": "C:\\Users\\jorda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\obj\\",
+        "outputPath": "c:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
