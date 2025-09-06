@@ -1,1 +1,2 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"c:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Images/NewAvatar.png","c:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/bin/DesktopGL/Content/Images/NewAvatar.xnb","TextureProcessor","Texture2DContent",24248,640085,0.1623054
