@@ -4,9 +4,11 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>c:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Images/atlas.png</File>
     <File>c:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Images/NewAvatar.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Images/NewAvatar.png</SourceFile>
-  <SourceTime>2024-05-18T18:53:38.6344112-05:00</SourceTime>
-  <DestFile>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/bin/DesktopGL/Content/Images/NewAvatar.xnb</DestFile>
-  <DestTime>2025-09-06T22:26:59.1091818-05:00</DestTime>
+  <SourceFile>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Images/atlas.png</SourceFile>
+  <SourceTime>2025-09-06T21:14:47.3157041-05:00</SourceTime>
+  <DestFile>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/bin/DesktopGL/Content/Images/atlas.xnb</DestFile>
+  <DestTime>2025-09-06T22:26:59.0624916-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2025-06-02T05:31:02-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
