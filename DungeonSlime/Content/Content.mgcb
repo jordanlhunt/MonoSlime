@@ -14,9 +14,7 @@
 #---------------------------------- Content ---------------------------------#
 
 #begin Images/atlas-definition.xml
-/importer:XmlImporter
-/processor:PassThroughProcessor
-/build:Images/atlas-definition.xml
+/copy:Images/atlas-definition.xml
 
 #begin Images/atlas.png
 /importer:TextureImporter

@@ -10,19 +10,14 @@ public class Game1 : Core
 {
     #region Static Classes
 
-    public static class TextureAtlasConstants
-    {
-        public const int SLIME_TEXTURE_WIDTH = 20;
-        public const int SLIME_TEXTURE_HEIGHT = 20;
-        public const int BAT_TEXTURE_WIDTH = 20;
-        public const int BAT_TEXTURE_HEIGHT = 20;
-        public const string ATLAS_LOCATION = "Images/atlas";
-    }
+
     #endregion
     #region Constants
     public const int DEFAULT_WINDOW_WIDTH = 1280;
     public const int DEFAULT_WINDOW_HEIGHT = 720;
     public const string LOGO_LOCATION = "Images/NewAvatar";
+    public const string ATLAS_LOCATION = "Images/atlas";
+    public const string ATLAS_DEFINITION_LOCATION = "images/atlas-definition";
 
     #endregion
 
@@ -42,22 +37,8 @@ public class Game1 : Core
     protected override void LoadContent()
     {
         logo = Content.Load<Texture2D>(LOGO_LOCATION);
-        Texture2D atlasTexture = Content.Load<Texture2D>(TextureAtlasConstants.ATLAS_LOCATION);
-        TextureAtlas textureAtlas = new TextureAtlas(atlasTexture);
-        textureAtlas.AddRegion(
-            "slime",
-            0,
-            0,
-            TextureAtlasConstants.SLIME_TEXTURE_WIDTH,
-            TextureAtlasConstants.SLIME_TEXTURE_HEIGHT
-        );
-        textureAtlas.AddRegion(
-            "bat",
-            20,
-            0,
-            TextureAtlasConstants.SLIME_TEXTURE_WIDTH,
-            TextureAtlasConstants.SLIME_TEXTURE_HEIGHT
-        );
+        Texture2D atlasTexture = Content.Load<Texture2D>(ATLAS_LOCATION);
+        TextureAtlas textureAtlas = TextureAtlas.FromFile(Content, ATLAS_DEFINITION_LOCATION);
         slime = textureAtlas.GetRegion("slime");
         bat = textureAtlas.GetRegion("bat");
     }
