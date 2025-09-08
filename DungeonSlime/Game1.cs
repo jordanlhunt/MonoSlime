@@ -9,7 +9,10 @@ namespace DungeonSlime;
 public class Game1 : Core
 {
     #region Static Classes
-
+    public static class Game1Constants
+    {
+        public const float BAT_SCALE_FACTOR = 4.0f;
+    }
 
     #endregion
     #region Constants
@@ -36,8 +39,6 @@ public class Game1 : Core
 
     protected override void LoadContent()
     {
-        logo = Content.Load<Texture2D>(LOGO_LOCATION);
-        Texture2D atlasTexture = Content.Load<Texture2D>(ATLAS_LOCATION);
         TextureAtlas textureAtlas = TextureAtlas.FromFile(Content, ATLAS_DEFINITION_LOCATION);
         slime = textureAtlas.GetRegion("slime");
         bat = textureAtlas.GetRegion("bat");
@@ -69,7 +70,7 @@ public class Game1 : Core
         );
         bat.Draw(
             SpriteBatch,
-            new Vector2(slime.Width * 4.0f + 10, 0),
+            new Vector2(slime.Width * Game1Constants.BAT_SCALE_FACTOR + 10, 0),
             Color.White,
             0.0f,
             Vector2.One,
