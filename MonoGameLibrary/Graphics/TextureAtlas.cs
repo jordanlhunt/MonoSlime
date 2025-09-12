@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -39,6 +38,12 @@ public class TextureAtlas
     public TextureRegion GetRegion(string name)
     {
         return textureRegionsDictionary[name];
+    }
+
+    public Sprite CreateSprite(string regionName)
+    {
+        TextureRegion textureRegion = GetRegion(regionName);
+        return new Sprite(textureRegion);
     }
 
     public bool RemoveRegion(string name)
