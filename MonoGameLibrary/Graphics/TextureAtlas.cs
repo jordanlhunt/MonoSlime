@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -12,6 +13,7 @@ public class TextureAtlas
 {
     #region Member Variables
     private Dictionary<string, TextureRegion> textureRegionsDictionary;
+    private Dictionary<string, Animation> animationsDictionary;
     #endregion
     #region Properties
     public Texture2D Texture { get; set; }
@@ -20,12 +22,14 @@ public class TextureAtlas
     public TextureAtlas()
     {
         textureRegionsDictionary = new Dictionary<string, TextureRegion>();
+        animationsDictionary = new Dictionary<string, Animation>();
     }
 
     public TextureAtlas(Texture2D texture2D)
     {
         Texture = texture2D;
         textureRegionsDictionary = new Dictionary<string, TextureRegion>();
+        animationsDictionary = new Dictionary<string, Animation>();
     }
     #endregion
     #region Public Methods
@@ -35,9 +39,19 @@ public class TextureAtlas
         textureRegionsDictionary.Add(name, textureRegion);
     }
 
-    public TextureRegion GetRegion(string name)
+    public void AddAnimation(string animationName, Animation animation)
     {
-        return textureRegionsDictionary[name];
+        animationsDictionary.Add(animationName, animation);
+    }
+
+    public TextureRegion GetRegion(string textureRegionName)
+    {
+        return textureRegionsDictionary[textureRegionName];
+    }
+
+    public Animation GetAnimation(string animationName)
+    {
+        return animationsDictionary[animationName];
     }
 
     public Sprite CreateSprite(string regionName)
@@ -49,6 +63,11 @@ public class TextureAtlas
     public bool RemoveRegion(string name)
     {
         return textureRegionsDictionary.Remove(name);
+    }
+
+    public bool RemoveAnimation(string animationName)
+    {
+        return animationsDictionary.Remove(animationName);
     }
 
     public void RemoveAllRegions()
@@ -108,6 +127,43 @@ public class TextureAtlas
                         {
                             textureAtlas.AddRegion(name, x, y, width, height);
                         }
+                    }
+                }
+                XElement animationContainer = root.Element("Animations");
+                if (animationContainer != null)
+                {
+                    IEnumerable<XElement> animationElements = animationContainer.Elements(
+                        "Animation"
+                    );
+                    foreach (var animationElement in animationElements)
+                    {
+                        XAttribute nameAttribute = animationElement.Attribute("name");
+                        string name = null;
+                        if (nameAttribute != null)
+                        {
+                            name = nameAttribute.Value;
+                        }
+                        XAttribute delayAttribute = animationElement.Attribute("delay");
+                        float delayInMilliseconds = 0;
+                        if (delayAttribute != null)
+                        {
+                            delayInMilliseconds = float.Parse(delayAttribute.Value);
+                        }
+                        TimeSpan delay = TimeSpan.FromMilliseconds(delayInMilliseconds);
+                        List<TextureRegion> frames = new List<TextureRegion>();
+                        IEnumerable<XElement> frameElements = animationElements.Elements("Frame");
+                        foreach (var frameElement in frameElements)
+                        {
+                            XAttribute regionAttribute = frameElement.Attribute("region");
+                            if (regionAttribute != null)
+                            {
+                                string regionName = regionAttribute.Value;
+                                TextureRegion textureRegion = textureAtlas.GetRegion(regionName);
+                                frames.Add(textureRegion);
+                            }
+                        }
+                        Animation animation = new Animation(frames, delay);
+                        textureAtlas.AddAnimation(name, animation);
                     }
                 }
                 return textureAtlas;
