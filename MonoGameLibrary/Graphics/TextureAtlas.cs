@@ -60,6 +60,12 @@ public class TextureAtlas
         return new Sprite(textureRegion);
     }
 
+    public AnimatedSprite CreateAnimatedSprite(string animationName)
+    {
+        Animation animation = GetAnimation(animationName);
+        return new AnimatedSprite(animation);
+    }
+
     public bool RemoveRegion(string name)
     {
         return textureRegionsDictionary.Remove(name);
@@ -151,7 +157,7 @@ public class TextureAtlas
                         }
                         TimeSpan delay = TimeSpan.FromMilliseconds(delayInMilliseconds);
                         List<TextureRegion> frames = new List<TextureRegion>();
-                        IEnumerable<XElement> frameElements = animationElements.Elements("Frame");
+                        IEnumerable<XElement> frameElements = animationElement.Elements("Frame");
                         foreach (var frameElement in frameElements)
                         {
                             XAttribute regionAttribute = frameElement.Attribute("region");
