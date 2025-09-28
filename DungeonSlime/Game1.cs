@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
+using MonoGameLibrary.Input;
 
 namespace DungeonSlime;
 
@@ -70,25 +72,24 @@ public class Game1 : Core
     #region Private Methods
     private void HandleKeyboardInput()
     {
-        KeyboardState keyboardState = Keyboard.GetState();
         float speed = MOVEMENT_SPEED;
-        if (keyboardState.IsKeyDown(Keys.Space))
+        if (Input.Keyboard.IsKeyDown(Keys.Space))
         {
             speed *= 1.75f;
         }
-        if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up))
+        if (Input.Keyboard.IsKeyDown(Keys.W) || Input.Keyboard.IsKeyDown(Keys.Up))
         {
             slimePosition.Y -= speed;
         }
-        if (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down))
+        if (Input.Keyboard.IsKeyDown(Keys.S) || Input.Keyboard.IsKeyDown(Keys.Down))
         {
             slimePosition.Y += speed;
         }
-        if (keyboardState.IsKeyDown(Keys.D) || keyboardState.IsKeyDown(Keys.Right))
+        if (Input.Keyboard.IsKeyDown(Keys.D) || Input.Keyboard.IsKeyDown(Keys.Right))
         {
             slimePosition.X += speed;
         }
-        if (keyboardState.IsKeyDown(Keys.A) || keyboardState.IsKeyDown(Keys.Left))
+        if (Input.Keyboard.IsKeyDown(Keys.A) || Input.Keyboard.IsKeyDown(Keys.Left))
         {
             slimePosition.X -= speed;
         }
@@ -96,9 +97,9 @@ public class Game1 : Core
 
     private void HandleGamePadInput()
     {
-        GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
+        GamePadInputInfo gamePadZero = Input.GamePads[(int)PlayerIndex.One];
         float speed = MOVEMENT_SPEED;
-        if (gamePadState.IsButtonDown(Buttons.A))
+        if (gamePadZero.IsButtonDown(Buttons.A))
         {
             speed *= 1.5f;
             GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
@@ -107,26 +108,26 @@ public class Game1 : Core
         {
             GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
         }
-        if (gamePadState.ThumbSticks.Left != Vector2.Zero)
+        if (gamePadZero.LeftThumbStick != Vector2.Zero)
         {
-            slimePosition.X += gamePadState.ThumbSticks.Left.X * speed;
-            slimePosition.Y -= gamePadState.ThumbSticks.Left.Y * speed;
+            slimePosition.X += gamePadZero.LeftThumbStick.X * speed;
+            slimePosition.Y -= gamePadZero.LeftThumbStick.Y * speed;
         }
         else
         {
-            if (gamePadState.IsButtonDown(Buttons.DPadUp))
+            if (gamePadZero.IsButtonDown(Buttons.DPadUp))
             {
                 slimePosition.Y -= speed;
             }
-            if (gamePadState.IsButtonDown(Buttons.DPadDown))
+            if (gamePadZero.IsButtonDown(Buttons.DPadDown))
             {
                 slimePosition.Y += speed;
             }
-            if (gamePadState.IsButtonDown(Buttons.DPadLeft))
+            if (gamePadZero.IsButtonDown(Buttons.DPadLeft))
             {
                 slimePosition.X -= speed;
             }
-            if (gamePadState.IsButtonDown(Buttons.DPadRight))
+            if (gamePadZero.IsButtonDown(Buttons.DPadRight))
             {
                 slimePosition.X += speed;
             }
