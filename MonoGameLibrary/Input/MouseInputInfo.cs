@@ -128,7 +128,7 @@ public class MouseInputInfo
 
     public bool WasMouseButtonJustReleased(MouseButton mouseButton)
     {
-        switch (button)
+        switch (mouseButton)
         {
             case MouseButton.Left:
                 return CurrentState.LeftButton == ButtonState.Released
