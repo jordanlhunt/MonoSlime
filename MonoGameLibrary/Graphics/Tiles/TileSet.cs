@@ -1,4 +1,4 @@
-﻿namespace MonoGameLibrary.Graphics.Tileset
+﻿namespace MonoGameLibrary.Graphics.Tiles
 {
     public class TileSet
     {
@@ -33,6 +33,18 @@
                     tileHeight
                 );
             }
+        }
+        #endregion
+        #region Public Methods
+        public TextureRegion GetTile(int index)
+        {
+            return tiles[index];
+        }
+
+        public TextureRegion GetTile(int column, int row)
+        {
+            int index = row * Columns + column;
+            return (GetTile(index));
         }
         #endregion
     }
