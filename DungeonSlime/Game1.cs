@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
+using MonoGameLibrary.Graphics.Tiles;
 using MonoGameLibrary.Input;
 using MonoGameLibrary.Shapes;
 
@@ -17,7 +18,9 @@ public class Game1 : Core
     public const string LOGO_LOCATION = "Images/NewAvatar";
     public const string ATLAS_LOCATION = "Images/atlas";
     public const string ATLAS_DEFINITION_LOCATION = "Images/atlas-definition.xml";
+    public const string TILEMAP_DEFINITION_LOCATION = "Images/tilemap-definition.xml";
     private const float MOVEMENT_SPEED = 5.0f;
+
     #endregion
     #region Member Variables
     private AnimatedSprite slime;
@@ -28,6 +31,8 @@ public class Game1 : Core
     private Rectangle screenBounds;
     private Circle slimeBoundsCircle;
     private Circle batBoundsCircle;
+    private Tilemap tileMap;
+    private Rectangle roomBounds;
     #endregion
     #region Constructor
     public Game1()
@@ -37,12 +42,27 @@ public class Game1 : Core
     protected override void Initialize()
     {
         base.Initialize();
+
+        screenBounds = GraphicsDevice.PresentationParameters.Bounds;
+        roomBounds = new Rectangle(
+            (int)tileMap.TileWidth,
+            (int)tileMap.TileHeight,
+            screenBounds.Width - (int)tileMap.TileWidth * 2,
+            screenBounds.Height - (int)tileMap.TileHeight * 2
+        );
+        int centerRow = tileMap.Rows / 2;
+        int centerColumns = tileMap.Columns / 2;
+        slimePosition = new Vector2(
+            centerColumns * tileMap.TileWidth,
+            centerRow * tileMap.TileHeight
+        );
+        batPosition = new Vector2(roomBounds.Left, roomBounds.Top);
         AssignRandomBatVelocity();
-        screenBounds = new Rectangle(
-            0,
-            0,
-            GraphicsDevice.PresentationParameters.BackBufferWidth,
-            GraphicsDevice.PresentationParameters.BackBufferHeight
+        System.Console.WriteLine(
+            $"Tilemap: {tileMap.Columns}x{tileMap.Rows}, TileSize: {tileMap.TileWidth}x{tileMap.TileHeight}"
+        );
+        System.Console.WriteLine(
+            $"Expected size: {tileMap.Columns * tileMap.TileWidth}x{tileMap.Rows * tileMap.TileHeight}"
         );
     }
 
@@ -54,6 +74,8 @@ public class Game1 : Core
         bat = textureAtlas.CreateAnimatedSprite("bat-animation");
         bat.Scale = new Vector2(4.0f, 4.0f);
         batPosition = new Vector2(slime.Width + 10, 0);
+        tileMap = Tilemap.LoadFromFile(Content, TILEMAP_DEFINITION_LOCATION);
+        tileMap.Scale = new Vector2(4.0f, 4.0f);
     }
 
     protected override void Update(GameTime gameTime)
@@ -71,7 +93,7 @@ public class Game1 : Core
         HandleGamePadInput();
         HandleSlimeBounds();
         Vector2 newBatPosition = batPosition + batVelocity;
-        HandleBatBounds(newBatPosition);
+        newBatPosition = HandleBatBounds(newBatPosition);
         batPosition = newBatPosition;
         HandleSlimeBatIntersection();
 
@@ -82,6 +104,7 @@ public class Game1 : Core
     {
         GraphicsDevice.Clear(Color.MonoGameOrange);
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        tileMap.Draw(SpriteBatch);
         slime.Draw(SpriteBatch, slimePosition);
         bat.Draw(SpriteBatch, batPosition);
         SpriteBatch.End();
@@ -160,25 +183,25 @@ public class Game1 : Core
             (int)(slimePosition.Y + (slime.Height * .5f)),
             (int)(slime.Width * .5f)
         );
-        if (slimeBoundsCircle.Left < screenBounds.Left)
+        if (slimeBoundsCircle.Left < roomBounds.Left)
         {
-            slimePosition.X = screenBounds.Left;
+            slimePosition.X = roomBounds.Left;
         }
-        else if (slimeBoundsCircle.Right > screenBounds.Right)
+        else if (slimeBoundsCircle.Right > roomBounds.Right)
         {
-            slimePosition.X = screenBounds.X - slime.Width;
+            slimePosition.X = roomBounds.Right - slime.Width;
         }
-        if (slimeBoundsCircle.Top < slimeBoundsCircle.Top)
+        if (slimeBoundsCircle.Top < roomBounds.Top)
         {
-            slimePosition.Y = screenBounds.Top;
+            slimePosition.Y = roomBounds.Top;
         }
-        else if (slimeBoundsCircle.Bottom > screenBounds.Bottom)
+        else if (slimeBoundsCircle.Bottom > roomBounds.Bottom)
         {
-            slimePosition.Y = screenBounds.Bottom - slime.Height;
+            slimePosition.Y = roomBounds.Bottom - slime.Height;
         }
     }
 
-    private void HandleBatBounds(Vector2 newBatPosition)
+    private Vector2 HandleBatBounds(Vector2 newBatPosition)
     {
         batBoundsCircle = new Circle(
             (int)(newBatPosition.X + (bat.Width * 0.5f)),
@@ -186,31 +209,33 @@ public class Game1 : Core
             (int)(bat.Width * 0.5f)
         );
         Vector2 normal = Vector2.Zero;
-        if (batBoundsCircle.Left < screenBounds.Left)
+        if (batBoundsCircle.Left < roomBounds.Left)
         {
             normal.X = Vector2.UnitX.X;
-            newBatPosition.X = screenBounds.Left;
+            newBatPosition.X = roomBounds.Left;
         }
-        else if (batBoundsCircle.Right > screenBounds.Right)
+        else if (batBoundsCircle.Right > roomBounds.Right)
         {
             normal.X = -Vector2.UnitX.X;
-            newBatPosition.X = screenBounds.Right - bat.Width;
+            newBatPosition.X = roomBounds.Right - bat.Width;
         }
-        if (batBoundsCircle.Top < screenBounds.Top)
+        if (batBoundsCircle.Top < roomBounds.Top)
         {
             normal.Y = Vector2.UnitY.Y;
-            newBatPosition.Y = screenBounds.Top;
+            newBatPosition.Y = roomBounds.Top;
         }
-        else if (batBoundsCircle.Bottom > screenBounds.Bottom)
+        else if (batBoundsCircle.Bottom > roomBounds.Bottom)
         {
             normal.Y = -Vector2.UnitY.Y;
-            newBatPosition.Y = screenBounds.Bottom - bat.Height;
+            newBatPosition.Y = roomBounds.Bottom - bat.Height;
         }
         if (normal != Vector2.Zero)
         {
             normal.Normalize();
             batVelocity = Vector2.Reflect(batVelocity, normal);
         }
+
+        return newBatPosition;
     }
 
     private void HandleSlimeBatIntersection()

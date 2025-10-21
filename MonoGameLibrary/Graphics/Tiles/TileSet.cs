@@ -23,8 +23,8 @@
             tiles = new TextureRegion[Count];
             for (int i = 0; i < Count; i++)
             {
-                int x = i % Columns * tileWidth;
-                int y = i / Columns * tileHeight;
+                int x = (i % Columns) * tileWidth;
+                int y = (i / Columns) * tileHeight;
                 tiles[i] = new TextureRegion(
                     textureRegion.Texture,
                     textureRegion.SourceRectangle.X + x,

@@ -41,17 +41,16 @@ public class Tilemap
         this.tileIds = new int[Count];
     }
     #endregion
-
     #region Public Method
-    public void SetTile(int index, int tileSetID)
+    public void SetTile(int index, int tileSetid)
     {
-        tileIds[index] = tileSetID;
+        tileIds[index] = tileSetid;
     }
 
-    public void SetTile(int column, int row, int tileSetID)
+    public void SetTile(int column, int row, int tileSetid)
     {
         int index = (row * Columns) + column;
-        SetTile(index, tileSetID);
+        SetTile(index, tileSetid);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -68,8 +67,8 @@ public class Tilemap
                 position,
                 Color.White,
                 0.0f,
+                Vector2.One,
                 Scale,
-                Vector2.Zero,
                 SpriteEffects.None,
                 1.0f
             );
@@ -83,7 +82,7 @@ public class Tilemap
         {
             using (XmlReader xmlReader = XmlReader.Create(stream))
             {
-                XDocument xDocument = XDocument.Load(reader);
+                XDocument xDocument = XDocument.Load(xmlReader);
                 XElement xRoot = xDocument.Root;
                 // The <Tileset> element contains the information about the tileset
                 // used by the tilemap.

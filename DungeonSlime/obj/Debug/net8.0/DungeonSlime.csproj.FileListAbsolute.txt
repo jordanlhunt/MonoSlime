@@ -9,9 +9,6 @@ c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\android-arm64\native\libopenal.so
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\android-x64\native\libopenal.so
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\android-x86\native\libopenal.so
-c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\ios-arm64\native\libopenal.dylib
-c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\iossimulator-arm64\native\libopenal.dylib
-c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\iossimulator-x64\native\libopenal.dylib
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\linux-x64\native\libopenal.so
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\osx\native\libopenal.dylib
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\win-x64\native\openal.dll
@@ -35,3 +32,9 @@ c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\obj\Debug\net
 c:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Images\NewAvatar.xnb
 C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Images\atlas.xnb
 C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Images\atlas-definition.xml
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\ios-arm64\native\libopenal.a
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\iossimulator-arm64\native\libopenal.a
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\iossimulator-x64\native\libopenal.a
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\linux-arm64\native\libopenal.so
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\obj\Debug\net8.0\mgcb.tool.restore
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Images\tilemap-definition.xml
