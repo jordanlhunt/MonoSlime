@@ -67,7 +67,7 @@ public class Tilemap
                 position,
                 Color.White,
                 0.0f,
-                Vector2.One,
+                Vector2.Zero,
                 Scale,
                 SpriteEffects.None,
                 1.0f
