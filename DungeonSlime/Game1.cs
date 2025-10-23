@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
 using MonoGameLibrary.Graphics.Tiles;
@@ -19,6 +21,9 @@ public class Game1 : Core
     public const string ATLAS_LOCATION = "Images/atlas";
     public const string ATLAS_DEFINITION_LOCATION = "Images/atlas-definition.xml";
     public const string TILEMAP_DEFINITION_LOCATION = "Images/tilemap-definition.xml";
+    public const string BOUNCE_SOUNDEFFECT_LOCATION = "Sounds/bounce";
+    public const string COLLECT_SOUNDEFFECT_LOCATION = "Sounds/collect";
+    public const string THEME_SONG_LOACATION = "Sounds/theme";
     private const float MOVEMENT_SPEED = 5.0f;
 
     #endregion
@@ -33,6 +38,9 @@ public class Game1 : Core
     private Circle batBoundsCircle;
     private Tilemap tileMap;
     private Rectangle roomBounds;
+    private SoundEffect bounceSoundEffect;
+    private SoundEffect collectSoundEffect;
+    private Song themeSong;
     #endregion
     #region Constructor
     public Game1()
@@ -76,6 +84,15 @@ public class Game1 : Core
         batPosition = new Vector2(slime.Width + 10, 0);
         tileMap = Tilemap.LoadFromFile(Content, TILEMAP_DEFINITION_LOCATION);
         tileMap.Scale = new Vector2(4.0f, 4.0f);
+        bounceSoundEffect = Content.Load<SoundEffect>(BOUNCE_SOUNDEFFECT_LOCATION);
+        collectSoundEffect = Content.Load<SoundEffect>(COLLECT_SOUNDEFFECT_LOCATION);
+        themeSong = Content.Load<Song>(THEME_SONG_LOACATION);
+        if (MediaPlayer.State == MediaState.Playing)
+        {
+            MediaPlayer.Stop();
+        }
+        MediaPlayer.Play(themeSong);
+        MediaPlayer.IsRepeating = true;
     }
 
     protected override void Update(GameTime gameTime)
@@ -233,6 +250,7 @@ public class Game1 : Core
         {
             normal.Normalize();
             batVelocity = Vector2.Reflect(batVelocity, normal);
+            bounceSoundEffect.Play();
         }
 
         return newBatPosition;
@@ -250,6 +268,7 @@ public class Game1 : Core
             int row = Random.Shared.Next(0, totalRows);
             batPosition = new Vector2(column * bat.Width, row * bat.Height);
             AssignRandomBatVelocity();
+            collectSoundEffect.Play();
         }
     }
 

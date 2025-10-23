@@ -41,7 +41,7 @@ public class Tilemap
         this.tileIds = new int[Count];
     }
     #endregion
-    #region Public Method
+    #region Public Methods
     public void SetTile(int index, int tileSetid)
     {
         tileIds[index] = tileSetid;

@@ -43,3 +43,21 @@
 #begin Images/tilemap-definition.xml
 /copy:Images/tilemap-definition.xml
 
+#begin Sounds/bounce.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/bounce.wav
+
+#begin Sounds/collect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/collect.wav
+
+#begin Sounds/theme.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/theme.ogg
+
