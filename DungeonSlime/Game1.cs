@@ -15,17 +15,14 @@ namespace DungeonSlime;
 public class Game1 : Core
 {
     #region Constants
-    public const int DEFAULT_WINDOW_WIDTH = 1280;
-    public const int DEFAULT_WINDOW_HEIGHT = 720;
-    public const string LOGO_LOCATION = "Images/NewAvatar";
-    public const string ATLAS_LOCATION = "Images/atlas";
-    public const string ATLAS_DEFINITION_LOCATION = "Images/atlas-definition.xml";
-    public const string TILEMAP_DEFINITION_LOCATION = "Images/tilemap-definition.xml";
-    public const string BOUNCE_SOUNDEFFECT_LOCATION = "Sounds/bounce";
-    public const string COLLECT_SOUNDEFFECT_LOCATION = "Sounds/collect";
-    public const string THEME_SONG_LOACATION = "Sounds/theme";
-    private const float MOVEMENT_SPEED = 5.0f;
-
+    private const int DefaultWindowWidth = 1280;
+    private const int DefaultWindowHeight = 720;
+    private const string BounceSoundEffectLocation = "Sounds/bounce";
+    private const string CollectSoundEffectLocation = "Sounds/collect";
+    private const string ThemeSongLocation = "Sounds/theme";
+    private const string AtlasDefinitionLocation = "Images/atlas-definition.xml";
+    private const string TilemapDefinitionLocation = "Images/tilemap-definition.xml";
+    private const float MovementSpeed = 5.0f;
     #endregion
     #region Member Variables
     private AnimatedSprite slime;
@@ -44,7 +41,7 @@ public class Game1 : Core
     #endregion
     #region Constructor
     public Game1()
-        : base("Dungeon Slime", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, false) { }
+        : base("Dungeon Slime", DefaultWindowWidth, DefaultWindowHeight, false) { }
     #endregion
     #region Public Methods
     protected override void Initialize()
@@ -72,38 +69,26 @@ public class Game1 : Core
         System.Console.WriteLine(
             $"Expected size: {tileMap.Columns * tileMap.TileWidth}x{tileMap.Rows * tileMap.TileHeight}"
         );
+        Audio.PlaySong(themeSong);
     }
 
     protected override void LoadContent()
     {
-        TextureAtlas textureAtlas = TextureAtlas.FromFile(Content, ATLAS_DEFINITION_LOCATION);
+        TextureAtlas textureAtlas = TextureAtlas.FromFile(Content, AtlasDefinitionLocation);
         slime = textureAtlas.CreateAnimatedSprite("slime-animation");
         slime.Scale = new Vector2(4.0f, 4.0f);
         bat = textureAtlas.CreateAnimatedSprite("bat-animation");
         bat.Scale = new Vector2(4.0f, 4.0f);
         batPosition = new Vector2(slime.Width + 10, 0);
-        tileMap = Tilemap.LoadFromFile(Content, TILEMAP_DEFINITION_LOCATION);
+        tileMap = Tilemap.LoadFromFile(Content, TilemapDefinitionLocation);
         tileMap.Scale = new Vector2(4.0f, 4.0f);
-        bounceSoundEffect = Content.Load<SoundEffect>(BOUNCE_SOUNDEFFECT_LOCATION);
-        collectSoundEffect = Content.Load<SoundEffect>(COLLECT_SOUNDEFFECT_LOCATION);
-        themeSong = Content.Load<Song>(THEME_SONG_LOACATION);
-        if (MediaPlayer.State == MediaState.Playing)
-        {
-            MediaPlayer.Stop();
-        }
-        MediaPlayer.Play(themeSong);
-        MediaPlayer.IsRepeating = true;
+        bounceSoundEffect = Content.Load<SoundEffect>(BounceSoundEffectLocation);
+        collectSoundEffect = Content.Load<SoundEffect>(CollectSoundEffectLocation);
+        themeSong = Content.Load<Song>(ThemeSongLocation);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (
-            GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
-            || Keyboard.GetState().IsKeyDown(Keys.Escape)
-        )
-        {
-            Exit();
-        }
         slime.Update(gameTime);
         bat.Update(gameTime);
         HandleKeyboardInput();
@@ -113,7 +98,6 @@ public class Game1 : Core
         newBatPosition = HandleBatBounds(newBatPosition);
         batPosition = newBatPosition;
         HandleSlimeBatIntersection();
-
         base.Update(gameTime);
     }
 
@@ -131,7 +115,7 @@ public class Game1 : Core
     #region Private Methods
     private void HandleKeyboardInput()
     {
-        float speed = MOVEMENT_SPEED;
+        float speed = MovementSpeed;
         if (Input.Keyboard.IsKeyDown(Keys.Space))
         {
             speed *= 1.75f;
@@ -152,12 +136,22 @@ public class Game1 : Core
         {
             slimePosition.X -= speed;
         }
+        if (Input.Keyboard.WasKeyJustPressed(Keys.M))
+        {
+            Audio.ToggleMute();
+        }
+
+        if (Input.Keyboard.WasKeyJustPressed((Keys.OemMinus)))
+        {
+            Audio.CurrentSongVolume -= 0.1f;
+            Audio.CurrentSoundEffectVolume -= 0.1f;
+        }
     }
 
     private void HandleGamePadInput()
     {
         GamePadInputInfo gamePadZero = Input.GamePads[(int)PlayerIndex.One];
-        float speed = MOVEMENT_SPEED;
+        float speed = MovementSpeed;
         if (gamePadZero.IsButtonDown(Buttons.A))
         {
             speed *= 1.5f;
@@ -250,7 +244,7 @@ public class Game1 : Core
         {
             normal.Normalize();
             batVelocity = Vector2.Reflect(batVelocity, normal);
-            bounceSoundEffect.Play();
+            Audio.PlaySoundEffect(bounceSoundEffect);
         }
 
         return newBatPosition;
@@ -268,7 +262,7 @@ public class Game1 : Core
             int row = Random.Shared.Next(0, totalRows);
             batPosition = new Vector2(column * bat.Width, row * bat.Height);
             AssignRandomBatVelocity();
-            collectSoundEffect.Play();
+            Audio.PlaySoundEffect(collectSoundEffect);
         }
     }
 
@@ -278,7 +272,7 @@ public class Game1 : Core
         float x = (float)Math.Cos(angle);
         float y = (float)Math.Sin(angle);
         Vector2 direction = new Vector2(x, y);
-        batVelocity = direction * MOVEMENT_SPEED;
+        batVelocity = direction * MovementSpeed;
     }
     #endregion
 }

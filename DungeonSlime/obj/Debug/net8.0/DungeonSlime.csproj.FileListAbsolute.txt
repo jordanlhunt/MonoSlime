@@ -38,3 +38,7 @@ C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net
 C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\runtimes\linux-arm64\native\libopenal.so
 C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\obj\Debug\net8.0\mgcb.tool.restore
 C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Images\tilemap-definition.xml
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Sounds\bounce.xnb
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Sounds\collect.xnb
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Sounds\theme.ogg
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Sounds\theme.xnb
