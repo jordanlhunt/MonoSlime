@@ -22,21 +22,28 @@ public class Game1 : Core
     private const string ThemeSongLocation = "Sounds/theme";
     private const string AtlasDefinitionLocation = "Images/atlas-definition.xml";
     private const string TilemapDefinitionLocation = "Images/tilemap-definition.xml";
+    private const string EquipmentProSpriteFontLocation = "Fonts/Equipmentpro";
     private const float MovementSpeed = 5.0f;
+    private const string Score = "Score";
     #endregion
     #region Member Variables
     private AnimatedSprite slime;
+    private AnimatedSprite bat;
     private Vector2 slimePosition;
     private Vector2 batPosition;
     private Vector2 batVelocity;
-    private AnimatedSprite bat;
+    private Vector2 scoreTextPosition;
+    private Vector2 scoreTextOrigin;
+    private Rectangle roomBounds;
     private Rectangle screenBounds;
     private Circle slimeBoundsCircle;
     private Circle batBoundsCircle;
     private Tilemap tileMap;
-    private Rectangle roomBounds;
     private SoundEffect bounceSoundEffect;
     private SoundEffect collectSoundEffect;
+    private int currentScore;
+    private SpriteFont spriteFont;
+
     private Song themeSong;
     #endregion
     #region Constructor
@@ -70,6 +77,9 @@ public class Game1 : Core
             $"Expected size: {tileMap.Columns * tileMap.TileWidth}x{tileMap.Rows * tileMap.TileHeight}"
         );
         Audio.PlaySong(themeSong);
+        scoreTextPosition = new Vector2(roomBounds.Left, tileMap.TileHeight * .5f);
+        float scoreTextYOrigin = spriteFont.MeasureString(Score).Y * 0.5f;
+        scoreTextOrigin = new Vector2(0, scoreTextYOrigin);
     }
 
     protected override void LoadContent()
@@ -85,6 +95,7 @@ public class Game1 : Core
         bounceSoundEffect = Content.Load<SoundEffect>(BounceSoundEffectLocation);
         collectSoundEffect = Content.Load<SoundEffect>(CollectSoundEffectLocation);
         themeSong = Content.Load<Song>(ThemeSongLocation);
+        spriteFont = Content.Load<SpriteFont>(EquipmentProSpriteFontLocation);
     }
 
     protected override void Update(GameTime gameTime)
@@ -108,7 +119,19 @@ public class Game1 : Core
         tileMap.Draw(SpriteBatch);
         slime.Draw(SpriteBatch, slimePosition);
         bat.Draw(SpriteBatch, batPosition);
+        SpriteBatch.DrawString(
+            spriteFont,
+            Score + ": " + currentScore,
+            scoreTextPosition,
+            Color.White,
+            0.0f,
+            scoreTextOrigin,
+            1.0f,
+            SpriteEffects.None,
+            0.0f
+        );
         SpriteBatch.End();
+
         base.Draw(gameTime);
     }
     #endregion
@@ -263,6 +286,7 @@ public class Game1 : Core
             batPosition = new Vector2(column * bat.Width, row * bat.Height);
             AssignRandomBatVelocity();
             Audio.PlaySoundEffect(collectSoundEffect);
+            currentScore += 100;
         }
     }
 

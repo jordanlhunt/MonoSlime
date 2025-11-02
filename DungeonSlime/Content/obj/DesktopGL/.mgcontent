@@ -4,6 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Fonts/EquipmentPro.spritefont</File>
     <File>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Images/atlas.png</File>
     <File>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Images/NewAvatar.png</File>
     <File>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Sounds/bounce.wav</File>
@@ -11,6 +12,7 @@
     <File>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Sounds/theme.ogg</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
