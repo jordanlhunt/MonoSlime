@@ -42,3 +42,4 @@ C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net
 C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Sounds\collect.xnb
 C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Sounds\theme.ogg
 C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Sounds\theme.xnb
+C:\Users\jorda\source\repos\CSHARP\Monogame\MonoSlime\DungeonSlime\bin\Debug\net8.0\Content\Fonts\EquipmentPro.xnb
