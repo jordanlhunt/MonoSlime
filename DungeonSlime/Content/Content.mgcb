@@ -13,13 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Fonts/EquipmentPro.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/EquipmentPro.spritefont
-
 #begin Images/atlas.png
 /importer:TextureImporter
 /processor:TextureProcessor
