@@ -13,6 +13,26 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Fonts/CompassPro.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/CompassPro.spritefont
+
+#begin Fonts/CompassPro.ttf
+/copy:Fonts/CompassPro.ttf
+
+#begin Fonts/EquipmentPro.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/EquipmentPro.spritefont
+
+#begin Fonts/EquipmentPro.ttf
+/copy:Fonts/EquipmentPro.ttf
+
 #begin Images/atlas.png
 /importer:TextureImporter
 /processor:TextureProcessor
