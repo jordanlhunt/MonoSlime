@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary.Audio;
 using MonoGameLibrary.Input;
+using MonoGameLibrary.Scenes;
 
 namespace MonoGameLibrary;
 
@@ -13,6 +14,8 @@ public class Core : Game
 {
     #region Member Variables
     internal static Core staticInstance;
+    private static Scene staticActiveScene;
+    private static Scene staticNextScene;
     #endregion
     #region Properties
     public static Core Instance
@@ -80,7 +83,49 @@ public class Core : Game
         {
             Exit();
         }
+
+        if (staticNextScene != null)
+        {
+            TransitionScene();
+        }
+
+        if (staticActiveScene != null)
+        {
+            staticActiveScene.Update(gameTime);
+        }
         base.Update(gameTime);
+    }
+
+    public static void ChangeScene(Scene nextScene)
+    {
+        if (staticActiveScene != nextScene)
+        {
+            staticNextScene = nextScene;
+        }
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
+        if (staticActiveScene != null)
+        {
+            staticActiveScene.Draw(gameTime);
+        }
+        base.Draw(gameTime);
+    }
+
+    private static void TransitionScene()
+    {
+        if (staticActiveScene != null)
+        {
+            staticActiveScene.Dispose();
+        }
+        GC.Collect();
+        staticActiveScene = staticNextScene;
+        staticNextScene = null;
+        if (staticActiveScene != null)
+        {
+            staticActiveScene.Initialize();
+        }
     }
     #endregion
 }

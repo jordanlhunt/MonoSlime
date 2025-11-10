@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Fonts/CompassPro.spritefont</SourceFile>
+  <SourceTime>2025-11-09T20:41:09.8925778-06:00</SourceTime>
+  <DestFile>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/bin/DesktopGL/Content/Fonts/CompassPro.xnb</DestFile>
+  <DestTime>2025-11-09T20:41:13.0861618-06:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2025-06-02T05:31:02-05:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2025-06-02T05:31:02-05:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

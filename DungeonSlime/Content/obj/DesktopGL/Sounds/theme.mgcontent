@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/Sounds/theme.ogg</SourceFile>
+  <SourceTime>2025-10-23T08:40:53.5463241-05:00</SourceTime>
+  <DestFile>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/bin/DesktopGL/Sounds/theme.xnb</DestFile>
+  <DestTime>2025-11-09T20:34:02.8598218-06:00</DestTime>
+  <Importer>OggImporter</Importer>
+  <ImporterTime>2018-12-08T10:35:54-06:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2018-12-08T10:35:54-06:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/Content/bin/DesktopGL/Sounds/theme.ogg</string>
+  </BuildOutput>
+</PipelineBuildEvent>
