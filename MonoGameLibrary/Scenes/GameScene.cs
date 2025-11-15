@@ -22,7 +22,7 @@ public class GameScene : Scene
     private const string AtlasSlimeAnimation = "slime-animation";
     private const string AtlasBatAnimation = "bat-animation";
     private const string TilemapDefinitionLocation = "Images/tilemap-definition.xml";
-    private const string EquipmentProSpriteFontLocation = "Fonts/Equipmentpro";
+    private const string EquipmentProSpriteFontLocation = "Fonts/EquipmentPro";
     #endregion
     #region Member Variables
 

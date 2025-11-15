@@ -1,29 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {}
+    "/home/jordan/RiderProjects/MonoSlime/MonoGameLibrary/MonoGameLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj": {
+    "/home/jordan/RiderProjects/MonoSlime/MonoGameLibrary/MonoGameLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj",
+        "projectUniqueName": "/home/jordan/RiderProjects/MonoSlime/MonoGameLibrary/MonoGameLibrary.csproj",
         "projectName": "MonoGameLibrary",
-        "projectPath": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\MonoGameLibrary.csproj",
-        "packagesPath": "C:\\Users\\jorda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jorda\\source\\repos\\CSHARP\\Monogame\\MonoSlime\\MonoGameLibrary\\obj\\",
+        "projectPath": "/home/jordan/RiderProjects/MonoSlime/MonoGameLibrary/MonoGameLibrary.csproj",
+        "packagesPath": "/home/jordan/.nuget/packages/",
+        "outputPath": "/home/jordan/RiderProjects/MonoSlime/MonoGameLibrary/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\jorda\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
+          "/home/jordan/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "/usr/lib/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,7 +39,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -70,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.112/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

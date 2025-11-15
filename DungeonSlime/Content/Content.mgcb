@@ -33,6 +33,9 @@
 #begin Fonts/EquipmentPro.ttf
 /copy:Fonts/EquipmentPro.ttf
 
+#begin Images/atlas-definition.xml
+/copy:Images/atlas-definition.xml
+
 #begin Images/atlas.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -44,9 +47,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/atlas.png
-
-#begin Images/atlas-definition.xml
-/copy:Images/atlas-definition.xml
 
 #begin Images/NewAvatar.png
 /importer:TextureImporter
