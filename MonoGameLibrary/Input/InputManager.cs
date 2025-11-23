@@ -6,12 +6,15 @@ namespace MonoGameLibrary.Input;
 public class InputManager
 {
     #region Properties
+
     public KeyboardInputInfo Keyboard { get; private set; }
     public MouseInputInfo Mouse { get; private set; }
     public GamePadInputInfo[] GamePads { get; private set; }
+
     #endregion
 
     #region Constructor
+
     public InputManager()
     {
         Keyboard = new KeyboardInputInfo();
@@ -22,9 +25,11 @@ public class InputManager
             GamePads[i] = new GamePadInputInfo((PlayerIndex)i);
         }
     }
+
     #endregion
 
     #region Public Methods
+
     public void Update(GameTime gameTime)
     {
         Keyboard.Update();
@@ -34,5 +39,6 @@ public class InputManager
             GamePads[i].Update(gameTime);
         }
     }
+
     #endregion
 }

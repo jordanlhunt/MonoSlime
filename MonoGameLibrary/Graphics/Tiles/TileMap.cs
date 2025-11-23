@@ -13,24 +13,33 @@ namespace MonoGameLibrary.Graphics.Tiles;
 public class Tilemap
 {
     #region Member Variables
+
     private readonly TileSet tileSet;
     private readonly int[] tileIds;
+
     #endregion
+
     #region Properties
+
     public int Rows { get; }
     public int Columns { get; }
     public int Count { get; }
     public Vector2 Scale { get; set; }
+
     public float TileWidth
     {
         get { return tileSet.TileWidth * Scale.X; }
     }
+
     public float TileHeight
     {
         get { return tileSet.TileHeight * Scale.Y; }
     }
+
     #endregion
+
     #region Constructor
+
     public Tilemap(TileSet tileSet, int columns, int rows)
     {
         Rows = rows;
@@ -40,8 +49,11 @@ public class Tilemap
         this.tileSet = tileSet;
         this.tileIds = new int[Count];
     }
+
     #endregion
+
     #region Public Methods
+
     public void SetTile(int index, int tileSetid)
     {
         tileIds[index] = tileSetid;
@@ -147,9 +159,11 @@ public class Tilemap
                         tilemap.SetTile(column, row, tilesetIndex);
                     }
                 }
+
                 return tilemap;
             }
         }
     }
+
     #endregion
 }

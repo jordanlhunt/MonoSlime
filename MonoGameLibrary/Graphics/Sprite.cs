@@ -6,6 +6,7 @@ namespace MonoGameLibrary.Graphics;
 public class Sprite
 {
     #region Properties
+
     public TextureRegion TextureRegion { get; set; }
     public Color Color { get; set; } = Color.White;
     public float Rotation { get; set; } = 0.0f;
@@ -13,25 +14,32 @@ public class Sprite
     public Vector2 Origin { get; set; } = Vector2.Zero;
     public float LayerDepth { get; set; } = 0.0f;
     public SpriteEffects SpriteEffects { get; set; } = SpriteEffects.None;
+
     public float Width
     {
         get { return TextureRegion.Width * Scale.X; }
     }
+
     public float Height
     {
         get { return TextureRegion.Height * Scale.Y; }
     }
+
     #endregion
+
     #region Constructor
+
     public Sprite() { }
 
     public Sprite(TextureRegion textureRegion)
     {
         this.TextureRegion = textureRegion;
     }
+
     #endregion
 
     #region Public Methods
+
     public void SetOriginToCenter()
     {
         Origin = new Vector2(TextureRegion.Width, TextureRegion.Height) * 0.5f;

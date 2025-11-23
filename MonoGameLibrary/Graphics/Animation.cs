@@ -6,10 +6,14 @@ namespace MonoGameLibrary.Graphics;
 public class Animation
 {
     #region Properties
+
     public List<TextureRegion> Frames { get; set; }
     public TimeSpan TimeBetweenFrames { get; set; }
+
     #endregion
+
     #region Constructors
+
     public Animation()
     {
         Frames = new List<TextureRegion>();
@@ -21,5 +25,6 @@ public class Animation
         this.Frames = frames;
         this.TimeBetweenFrames = timeBetweenFrames;
     }
+
     #endregion
 }

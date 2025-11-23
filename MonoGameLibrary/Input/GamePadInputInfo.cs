@@ -7,12 +7,17 @@ namespace MonoGameLibrary.Input;
 public class GamePadInputInfo
 {
     #region Private Members
+
     private TimeSpan vibrationTimeRemaining = TimeSpan.Zero;
+
     #endregion
+
     #region Properties
+
     public PlayerIndex PlayerIndex { get; }
     public GamePadState PreviousState { get; private set; }
     public GamePadState CurrentState { get; private set; }
+
     public bool IsGamePadConnected
     {
         get { return CurrentState.IsConnected; }
@@ -22,30 +27,37 @@ public class GamePadInputInfo
     {
         get { return CurrentState.ThumbSticks.Left; }
     }
+
     public Vector2 RightThumbStick
     {
         get { return CurrentState.ThumbSticks.Right; }
     }
+
     public float LeftTrigger
     {
         get { return CurrentState.Triggers.Left; }
     }
+
     public float RightTrigger
     {
         get { return CurrentState.Triggers.Right; }
     }
+
     #endregion
 
     #region Constructor
+
     public GamePadInputInfo(PlayerIndex playerIndex)
     {
         PlayerIndex = playerIndex;
         PreviousState = new GamePadState();
         CurrentState = PreviousState;
     }
+
     #endregion
 
     #region Public Methods
+
     public void Update(GameTime gameTime)
     {
         PreviousState = CurrentState;
@@ -90,5 +102,6 @@ public class GamePadInputInfo
     {
         GamePad.SetVibration(PlayerIndex, 0.0f, 0.0f);
     }
+
     #endregion
 }

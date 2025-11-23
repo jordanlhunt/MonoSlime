@@ -6,52 +6,71 @@ namespace MonoGameLibrary.Shapes
     public readonly struct Circle : IEquatable<Circle>
     {
         #region Static Fields
+
         private static readonly Circle emptyCircle = new Circle();
+
         #endregion
+
         #region Public Fields
+
         public readonly int X;
         public readonly int Y;
         public readonly int Radius;
+
         #endregion
+
         #region Properties
+
         public readonly Point Location
         {
             get { return new Point(X, Y); }
         }
+
         public static Circle EmptyCircle
         {
             get { return emptyCircle; }
         }
+
         public readonly bool IsEmpty
         {
             get { return X == 0 && Y == 0 && Radius == 0; }
         }
+
         public readonly int Top
         {
             get { return Y - Radius; }
         }
+
         public readonly int Bottom
         {
             get { return Y + Radius; }
         }
+
         public readonly int Left
         {
             get { return X - Radius; }
         }
+
         public readonly int Right
         {
             get { return X + Radius; }
         }
+
         #endregion
+
         #region Constructor
+
         public Circle(int x, int y, int radius)
         {
             X = x;
             Y = y;
             Radius = radius;
         }
+
         #endregion
+
         #region Public Methods
+
         public bool IsIntersecting(Circle otherCircle)
         {
             int radiiSquared =
@@ -66,6 +85,7 @@ namespace MonoGameLibrary.Shapes
         #endregion
 
         #region Override Methods
+
         public override bool Equals(object someObject)
         {
             if (someObject is Circle otherCircle)
@@ -98,9 +118,11 @@ namespace MonoGameLibrary.Shapes
         {
             return HashCode.Combine(X, Y, Radius);
         }
+
         #endregion
 
         #region Operator Overloads
+
         public static bool operator ==(Circle leftHandSide, Circle rightHandSide)
         {
             return leftHandSide.Equals(rightHandSide);
@@ -110,6 +132,7 @@ namespace MonoGameLibrary.Shapes
         {
             return !(leftHandSide.Equals(rightHandSide));
         }
+
         #endregion
     }
 }

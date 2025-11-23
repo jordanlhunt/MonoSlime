@@ -3,16 +3,23 @@
     public class TileSet
     {
         #region Member Variables
+
         private readonly TextureRegion[] tiles;
+
         #endregion
+
         #region Properties
+
         public int TileWidth { get; }
         public int TileHeight { get; }
         public int Columns { get; }
         public int Rows { get; }
         public int Count { get; }
+
         #endregion
+
         #region Constructor
+
         public TileSet(TextureRegion textureRegion, int tileWidth, int tileHeight)
         {
             this.TileWidth = tileWidth;
@@ -34,8 +41,11 @@
                 );
             }
         }
+
         #endregion
+
         #region Public Methods
+
         public TextureRegion GetTile(int index)
         {
             return tiles[index];
@@ -46,6 +56,7 @@
             int index = row * Columns + column;
             return (GetTile(index));
         }
+
         #endregion
     }
 }

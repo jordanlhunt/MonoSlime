@@ -13,15 +13,20 @@ namespace MonoGameLibrary;
 public class Core : Game
 {
     #region Member Variables
+
     internal static Core staticInstance;
     private static Scene staticActiveScene;
     private static Scene staticNextScene;
+
     #endregion
+
     #region Properties
+
     public static Core Instance
     {
         get { return staticInstance; }
     }
+
     public static GraphicsDeviceManager Graphics { get; private set; }
     public static new GraphicsDevice GraphicsDevice { get; private set; }
     public static SpriteBatch SpriteBatch { get; private set; }
@@ -33,8 +38,11 @@ public class Core : Game
     /// Highlight
     /// </summary>
     public static AudioController Audio { get; private set; }
+
     #endregion
+
     #region Constructor
+
     public Core(string title, int width, int height, bool isFullScreen)
     {
         if (staticInstance != null)
@@ -43,6 +51,7 @@ public class Core : Game
                 $"[ERROR] - Only a single Core instance can be created"
             );
         }
+
         staticInstance = this;
         Graphics = new GraphicsDeviceManager(this);
         Graphics.PreferredBackBufferWidth = width;
@@ -55,9 +64,11 @@ public class Core : Game
         IsMouseVisible = true;
         ExitOnEscape = true;
     }
+
     #endregion
 
     #region Public Methods
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -93,6 +104,7 @@ public class Core : Game
         {
             staticActiveScene.Update(gameTime);
         }
+
         base.Update(gameTime);
     }
 
@@ -110,6 +122,7 @@ public class Core : Game
         {
             staticActiveScene.Draw(gameTime);
         }
+
         base.Draw(gameTime);
     }
 
@@ -119,6 +132,7 @@ public class Core : Game
         {
             staticActiveScene.Dispose();
         }
+
         GC.Collect();
         staticActiveScene = staticNextScene;
         staticNextScene = null;
@@ -127,5 +141,6 @@ public class Core : Game
             staticActiveScene.Initialize();
         }
     }
+
     #endregion
 }

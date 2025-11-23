@@ -6,25 +6,34 @@ namespace MonoGameLibrary.Graphics;
 public class TextureRegion
 {
     #region Properties
+
     public Texture2D Texture { get; set; }
     public Rectangle SourceRectangle { get; set; }
+
     public int Width
     {
         get { return SourceRectangle.Width; }
     }
+
     public int Height
     {
         get { return SourceRectangle.Height; }
     }
+
     #endregion
+
     #region Constructor
+
     public TextureRegion(Texture2D texture, int x, int y, int width, int height)
     {
         Texture = texture;
         SourceRectangle = new Rectangle(x, y, width, height);
     }
+
     #endregion
+
     #region Methods
+
     public void Draw(SpriteBatch spriteBatch, Vector2 position, Color color)
     {
         Draw(
@@ -85,5 +94,6 @@ public class TextureRegion
             layerDepth
         );
     }
+
     #endregion
 }

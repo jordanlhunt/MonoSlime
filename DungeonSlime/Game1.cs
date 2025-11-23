@@ -16,18 +16,28 @@ namespace DungeonSlime;
 public class Game1 : Core
 {
     #region Constants
+
     private const int DefaultWindowWidth = 1280;
     private const int DefaultWindowHeight = 720;
     private const string ThemeSongLocation = "Sounds/theme";
+
     #endregion
+
     #region Member Variables
+
     private Song themeSong;
+
     #endregion
+
     #region Constructor
+
     public Game1()
         : base("Dungeon Slime", DefaultWindowWidth, DefaultWindowHeight, false) { }
+
     #endregion
+
     #region Public Methods
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -40,5 +50,6 @@ public class Game1 : Core
     {
         themeSong = Content.Load<Song>(ThemeSongLocation);
     }
+
     #endregion
 }

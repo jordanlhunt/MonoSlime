@@ -8,14 +8,18 @@ namespace MonoGameLibrary.Audio;
 public class AudioController : IDisposable
 {
     #region Member Variables
+
     private readonly List<SoundEffectInstance> activeSoundEffectInstances;
     private float previousSongVolume;
     private float previousSoundEffectVolume;
+
     #endregion
 
     #region Properties
+
     public bool IsDisposed { get; private set; }
     public bool IsMuted { get; private set; }
+
     public float CurrentSongVolume
     {
         get
@@ -37,6 +41,7 @@ public class AudioController : IDisposable
             MediaPlayer.Volume = Math.Clamp(value, 0.0f, 1.0f);
         }
     }
+
     public float CurrentSoundEffectVolume
     {
         get
@@ -58,6 +63,7 @@ public class AudioController : IDisposable
             SoundEffect.MasterVolume = Math.Clamp(value, 0.0f, 1.0f);
         }
     }
+
     #endregion
 
     #region Constructor
@@ -88,6 +94,7 @@ public class AudioController : IDisposable
                 {
                     soundEffectInstance.Dispose();
                 }
+
                 activeSoundEffectInstances.RemoveAt(i);
             }
         }
@@ -122,6 +129,7 @@ public class AudioController : IDisposable
         {
             MediaPlayer.Stop();
         }
+
         MediaPlayer.Play(song);
         MediaPlayer.IsRepeating = isRepeating;
     }
@@ -191,6 +199,7 @@ public class AudioController : IDisposable
             {
                 soundEffectInstance.Dispose();
             }
+
             activeSoundEffectInstances.Clear();
         }
 

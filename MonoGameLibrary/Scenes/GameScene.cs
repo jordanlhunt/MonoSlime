@@ -23,7 +23,9 @@ public class GameScene : Scene
     private const string AtlasBatAnimation = "bat-animation";
     private const string TilemapDefinitionLocation = "Images/tilemap-definition.xml";
     private const string EquipmentProSpriteFontLocation = "Fonts/EquipmentPro";
+
     #endregion
+
     #region Member Variables
 
     private AnimatedSprite player;
@@ -146,6 +148,7 @@ public class GameScene : Scene
         {
             playerPosition.X = roomBoundsRectangle.Right - player.Width;
         }
+
         if (playerBoundsCircle.Top < roomBoundsRectangle.Top)
         {
             playerPosition.Y = roomBoundsRectangle.Top;
@@ -174,6 +177,7 @@ public class GameScene : Scene
             normal.X = -Vector2.UnitX.X;
             newBatPosition.X = roomBoundsRectangle.Right - bat.Width;
         }
+
         if (batBoundsCircle.Top < roomBoundsRectangle.Top)
         {
             normal.Y = Vector2.UnitY.Y;
@@ -184,6 +188,7 @@ public class GameScene : Scene
             normal.Y = -Vector2.UnitY.Y;
             newBatPosition.Y = roomBoundsRectangle.Bottom - bat.Height;
         }
+
         if (normal != Vector2.Zero)
         {
             normal.Normalize();
@@ -224,22 +229,27 @@ public class GameScene : Scene
         {
             speed *= 1.75f;
         }
+
         if (keyboardInputInfo.IsKeyDown(Keys.W) || keyboardInputInfo.IsKeyDown(Keys.Up))
         {
             playerPosition.Y -= speed;
         }
+
         if (keyboardInputInfo.IsKeyDown(Keys.S) || keyboardInputInfo.IsKeyDown(Keys.Down))
         {
             playerPosition.Y += speed;
         }
+
         if (keyboardInputInfo.IsKeyDown(Keys.D) || keyboardInputInfo.IsKeyDown(Keys.Right))
         {
             playerPosition.X += speed;
         }
+
         if (keyboardInputInfo.IsKeyDown(Keys.A) || keyboardInputInfo.IsKeyDown(Keys.Left))
         {
             playerPosition.X -= speed;
         }
+
         if (keyboardInputInfo.WasKeyJustPressed(Keys.M))
         {
             Core.Audio.ToggleMute();
@@ -266,6 +276,7 @@ public class GameScene : Scene
         {
             GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
         }
+
         if (gamePadZero.LeftThumbStick != Vector2.Zero)
         {
             playerPosition.X += gamePadZero.LeftThumbStick.X * speed;
@@ -277,14 +288,17 @@ public class GameScene : Scene
             {
                 playerPosition.Y -= speed;
             }
+
             if (gamePadZero.IsButtonDown(Buttons.DPadDown))
             {
                 playerPosition.Y += speed;
             }
+
             if (gamePadZero.IsButtonDown(Buttons.DPadLeft))
             {
                 playerPosition.X -= speed;
             }
+
             if (gamePadZero.IsButtonDown(Buttons.DPadRight))
             {
                 playerPosition.X += speed;

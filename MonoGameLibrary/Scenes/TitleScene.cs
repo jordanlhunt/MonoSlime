@@ -7,19 +7,24 @@ namespace MonoGameLibrary.Scenes;
 public class TitleScene : Scene
 {
     #region Constants
+
     private const string DUNGEON_TEXT = "Dungeon";
     private const string SLIME_TEXT = "Slime";
     private const string PRESS_ENTER_TEXT = "Press Enter To Start";
     private const string EQUIPMENT_PRO_LOCATION = "Fonts/EquipmentPro";
     private const string COMPASS_PRO_LOCATION = "Fonts/CompassPro";
+    private const string REPEATING_BACKGROUND_LOCATION = "Images/background-pattern";
     private const int DUNGEON_TEXT_X = 640;
     private const int DUNGEON_TEXT_Y = 100;
     private const int SLIME_TEXT_X = 755;
     private const int SLIME_TEXT_Y = 285;
     private const int PRESS_ENTER_X = 640;
     private const int PRESS_ENTER_Y = 620;
+
     #endregion
+
     #region Member Variables
+
     private SpriteFont equipmentProFont;
     private SpriteFont compassProSpriteFont;
     private Vector2 dungeonTextPosition;
@@ -28,10 +33,14 @@ public class TitleScene : Scene
     private Vector2 slimeTextOrigin;
     private Vector2 pressEnterPosition;
     private Vector2 pressEnterOrigin;
+    private Rectangle repeatingBackgroundPatternDestination;
+    private Vector2 repeatingBackgroundPatternOffset;
+    private Texture2D repeatingBackgroundPattern;
+    private float repeatingBackgroundScrollSpeed = 50.0f;
+
     #endregion
 
     #region Public Methods
-
 
     public override void Initialize()
     {
@@ -46,12 +55,15 @@ public class TitleScene : Scene
         textSize = equipmentProFont.MeasureString(PRESS_ENTER_TEXT);
         pressEnterPosition = new Vector2(PRESS_ENTER_X, PRESS_ENTER_Y);
         pressEnterOrigin = textSize * 0.5f;
+        repeatingBackgroundPatternOffset = Vector2.Zero;
+        repeatingBackgroundPatternDestination = Core.GraphicsDevice.PresentationParameters.Bounds;
     }
 
     public override void LoadContent()
     {
         equipmentProFont = Core.Content.Load<SpriteFont>(EQUIPMENT_PRO_LOCATION);
         compassProSpriteFont = Core.Content.Load<SpriteFont>(COMPASS_PRO_LOCATION);
+        repeatingBackgroundPattern = Core.Content.Load<Texture2D>(REPEATING_BACKGROUND_LOCATION);
     }
 
     public override void Update(GameTime gameTime)
@@ -60,13 +72,29 @@ public class TitleScene : Scene
         {
             Core.ChangeScene(new GameScene());
         }
+
+        UpdateRepeatingBackground(gameTime);
     }
 
     public override void Draw(GameTime gameTime)
     {
         Core.GraphicsDevice.Clear(new Color(32, 40, 78, 255));
+
+        Core.SpriteBatch.Begin(samplerState: SamplerState.PointWrap);
+        Core.SpriteBatch.Draw(
+            repeatingBackgroundPattern,
+            repeatingBackgroundPatternDestination,
+            new Rectangle(
+                repeatingBackgroundPatternOffset.ToPoint(),
+                repeatingBackgroundPatternDestination.Size
+            ),
+            Color.White * 0.5f
+        );
+        Core.SpriteBatch.End();
+
         Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
         Color dropShadowColor = Color.Black * 0.5f;
+
         // Draw Text Twice for simple shadow effect
         Core.SpriteBatch.DrawString(
             compassProSpriteFont,
@@ -124,6 +152,20 @@ public class TitleScene : Scene
             0.0f
         );
         Core.SpriteBatch.End();
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    void UpdateRepeatingBackground(GameTime gameTime)
+    {
+        float wrappingOffset =
+            repeatingBackgroundScrollSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        repeatingBackgroundPatternOffset.X -= wrappingOffset;
+        repeatingBackgroundPatternOffset.Y -= wrappingOffset;
+        repeatingBackgroundPatternOffset.X %= repeatingBackgroundPattern.Width;
+        repeatingBackgroundPatternOffset.Y %= repeatingBackgroundPattern.Height;
     }
 
     #endregion

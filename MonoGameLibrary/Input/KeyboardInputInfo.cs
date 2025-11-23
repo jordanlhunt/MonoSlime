@@ -5,18 +5,24 @@ namespace MonoGameLibrary.Input;
 public class KeyboardInputInfo
 {
     #region Properties
+
     public KeyboardState PreviousState { get; private set; }
     public KeyboardState CurrentState { get; private set; }
+
     #endregion
 
     #region Constructor
+
     public KeyboardInputInfo()
     {
         PreviousState = new KeyboardState();
         CurrentState = PreviousState;
     }
+
     #endregion
+
     #region Public Methods
+
     public void Update()
     {
         PreviousState = CurrentState;
@@ -37,5 +43,6 @@ public class KeyboardInputInfo
     {
         return CurrentState.IsKeyUp(key) && PreviousState.IsKeyDown(key);
     }
+
     #endregion
 }

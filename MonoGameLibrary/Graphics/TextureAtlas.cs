@@ -12,13 +12,20 @@ namespace MonoGameLibrary.Graphics;
 public class TextureAtlas
 {
     #region Member Variables
+
     private Dictionary<string, TextureRegion> textureRegionsDictionary;
     private Dictionary<string, Animation> animationsDictionary;
+
     #endregion
+
     #region Properties
+
     public Texture2D Texture { get; set; }
+
     #endregion
+
     #region Constructors
+
     public TextureAtlas()
     {
         textureRegionsDictionary = new Dictionary<string, TextureRegion>();
@@ -31,8 +38,11 @@ public class TextureAtlas
         textureRegionsDictionary = new Dictionary<string, TextureRegion>();
         animationsDictionary = new Dictionary<string, Animation>();
     }
+
     #endregion
+
     #region Public Methods
+
     public void AddRegion(string name, int x, int y, int width, int height)
     {
         TextureRegion textureRegion = new TextureRegion(Texture, x, y, width, height);
@@ -105,36 +115,42 @@ public class TextureAtlas
                         {
                             name = nameAttribute.Value;
                         }
+
                         int x = 0;
                         XAttribute xAttribute = region.Attribute("x");
                         if (xAttribute != null)
                         {
                             x = int.Parse(xAttribute.Value);
                         }
+
                         int y = 0;
                         XAttribute yAttribute = region.Attribute("y");
                         if (yAttribute != null)
                         {
                             y = int.Parse(yAttribute.Value);
                         }
+
                         int width = 0;
                         XAttribute widthAttribute = region.Attribute("width");
                         if (widthAttribute != null)
                         {
                             width = int.Parse(widthAttribute.Value);
                         }
+
                         int height = 0;
                         XAttribute heightAttribute = region.Attribute("height");
                         if (heightAttribute != null)
                         {
                             height = int.Parse(heightAttribute.Value);
                         }
+
                         if (!string.IsNullOrEmpty(name))
                         {
                             textureAtlas.AddRegion(name, x, y, width, height);
                         }
                     }
                 }
+
                 XElement animationContainer = root.Element("Animations");
                 if (animationContainer != null)
                 {
@@ -149,12 +165,14 @@ public class TextureAtlas
                         {
                             name = nameAttribute.Value;
                         }
+
                         XAttribute delayAttribute = animationElement.Attribute("delay");
                         float delayInMilliseconds = 0;
                         if (delayAttribute != null)
                         {
                             delayInMilliseconds = float.Parse(delayAttribute.Value);
                         }
+
                         TimeSpan delay = TimeSpan.FromMilliseconds(delayInMilliseconds);
                         List<TextureRegion> frames = new List<TextureRegion>();
                         IEnumerable<XElement> frameElements = animationElement.Elements("Frame");
@@ -168,13 +186,16 @@ public class TextureAtlas
                                 frames.Add(textureRegion);
                             }
                         }
+
                         Animation animation = new Animation(frames, delay);
                         textureAtlas.AddAnimation(name, animation);
                     }
                 }
+
                 return textureAtlas;
             }
         }
     }
+
     #endregion
 }
