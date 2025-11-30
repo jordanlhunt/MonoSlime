@@ -96,3 +96,11 @@ C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/bin/Debug/net
 /home/jordan/RiderProjects/MonoSlime/DungeonSlime/obj/Debug/net8.0/DungeonSlime.pdb
 /home/jordan/RiderProjects/MonoSlime/DungeonSlime/obj/Debug/net8.0/DungeonSlime.genruntimeconfig.cache
 /home/jordan/RiderProjects/MonoSlime/DungeonSlime/obj/Debug/net8.0/ref/DungeonSlime.dll
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/Content/Images/background-pattern.xnb
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/Content/Sounds/ui.xnb
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/GumCommon.dll
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/FlatRedBall.InterpolationCore.dll
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/MonoGameGum.dll
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/TextCopy.dll
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/Content/Sounds/Click_15.xnb

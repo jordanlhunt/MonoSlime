@@ -49,6 +49,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Gum.MonoGame": {
+              "target": "Package",
+              "version": "[2025.11.23.2, )"
+            },
             "MonoGame.Content.Builder.Task": {
               "target": "Package",
               "version": "[3.8.*, )"
@@ -125,6 +129,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Gum.MonoGame": {
+              "target": "Package",
+              "version": "[2025.11.23.2, )"
+            },
             "MonoGame.Framework.DesktopGL": {
               "suppressParent": "All",
               "target": "Package",

@@ -1,9 +1,13 @@
 ﻿using System;
+using Gum.Forms;
+using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using MonoGameGum;
+using MonoGameLibrary;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
 using MonoGameLibrary.Graphics.Tiles;
@@ -43,12 +47,39 @@ public class Game1 : Core
         base.Initialize();
 
         Audio.PlaySong(themeSong);
+        InitializeGum();
         ChangeScene(new TitleScene());
     }
 
     protected override void LoadContent()
     {
         themeSong = Content.Load<Song>(ThemeSongLocation);
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    public void InitializeGum()
+    {
+        GumService.Default.Initialize(this, DefaultVisualsVersion.V2);
+        if (GumService.Default.ContentLoader != null)
+        {
+            GumService.Default.ContentLoader.XnaContentManager = Core.Content;
+        }
+        FrameworkElement.KeyboardsForUiControl.Add(GumService.Default.Keyboard);
+        FrameworkElement.GamePadsForUiControl.AddRange(GumService.Default.Gamepads);
+        FrameworkElement.TabReverseKeyCombos.Add(
+            new KeyCombo() { PushedKey = Microsoft.Xna.Framework.Input.Keys.Up }
+        );
+        FrameworkElement.TabKeyCombos.Add(
+            new KeyCombo() { PushedKey = Microsoft.Xna.Framework.Input.Keys.Down }
+        );
+        GumService.Default.CanvasWidth =
+            GraphicsDevice.PresentationParameters.BackBufferWidth / 4.0f;
+        GumService.Default.CanvasHeight =
+            GraphicsDevice.PresentationParameters.BackBufferHeight / 4.0f;
+        GumService.Default.Renderer.Camera.Zoom = 4.0f;
     }
 
     #endregion

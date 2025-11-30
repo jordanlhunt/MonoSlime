@@ -81,6 +81,18 @@
 /processorParam:Quality=Best
 /build:Sounds/bounce.wav
 
+#begin Sounds/Click_15.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Click_15.wav;Sounds/ui.wav
+
+#begin Sounds/Click_15.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Click_15.wav
+
 #begin Sounds/collect.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

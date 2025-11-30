@@ -10,10 +10,12 @@
     <File>/home/jordan/RiderProjects/MonoSlime/DungeonSlime/Content/Images/background-pattern.png</File>
     <File>/home/jordan/RiderProjects/MonoSlime/DungeonSlime/Content/Images/NewAvatar.png</File>
     <File>/home/jordan/RiderProjects/MonoSlime/DungeonSlime/Content/Sounds/bounce.wav</File>
+    <File>/home/jordan/RiderProjects/MonoSlime/DungeonSlime/Content/Sounds/Click_15.wav</File>
     <File>/home/jordan/RiderProjects/MonoSlime/DungeonSlime/Content/Sounds/collect.wav</File>
     <File>/home/jordan/RiderProjects/MonoSlime/DungeonSlime/Content/Sounds/theme.ogg</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
