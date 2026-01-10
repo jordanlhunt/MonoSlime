@@ -20,6 +20,26 @@ public class TextureRegion
         get { return SourceRectangle.Height; }
     }
 
+    public float TopTextureCoordinate
+    {
+        get { return SourceRectangle.Top / (float)Texture.Height; }
+    }
+
+    public float BottomTextureCoordinate
+    {
+        get { return SourceRectangle.Bottom / (float)Texture.Height; }
+    }
+
+    public float LeftTextureCoordinate
+    {
+        get { return SourceRectangle.Left / (float)Texture.Width; }
+    }
+
+    public float RightTextureCoordinate
+    {
+        get { return SourceRectangle.Right / (float)Texture.Width; }
+    }
+
     #endregion
 
     #region Constructor

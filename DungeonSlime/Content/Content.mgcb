@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Fonts/04b_30.fnt
+/copy:Fonts/04b_30.fnt
+
 #begin Fonts/CompassPro.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -80,12 +83,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/bounce.wav
-
-#begin Sounds/Click_15.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/Click_15.wav;Sounds/ui.wav
 
 #begin Sounds/Click_15.wav
 /importer:WavImporter
