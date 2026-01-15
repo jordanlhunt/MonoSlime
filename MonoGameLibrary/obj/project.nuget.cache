@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mIakwG+mbEE=",
+  "dgSpecHash": "wHWliVkkLLw=",
   "success": true,
   "projectFilePath": "/home/jordan/RiderProjects/MonoSlime/MonoGameLibrary/MonoGameLibrary.csproj",
   "expectedPackageFiles": [
@@ -17,7 +17,9 @@
     "/home/jordan/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
     "/home/jordan/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
     "/home/jordan/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512",
-    "/home/jordan/.nuget/packages/textcopy/6.2.1/textcopy.6.2.1.nupkg.sha512"
+    "/home/jordan/.nuget/packages/textcopy/6.2.1/textcopy.6.2.1.nupkg.sha512",
+    "/home/jordan/.nuget/packages/microsoft.netcore.app.ref/8.0.23/microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
+    "/home/jordan/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.23/microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512"
   ],
   "logs": []
 }
