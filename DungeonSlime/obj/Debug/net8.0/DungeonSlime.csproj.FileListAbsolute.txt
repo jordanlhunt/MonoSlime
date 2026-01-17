@@ -104,3 +104,4 @@ C:/Users/jorda/source/repos/CSHARP/Monogame/MonoSlime/DungeonSlime/bin/Debug/net
 /home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
 /home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/TextCopy.dll
 /home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/Content/Sounds/Click_15.xnb
+/home/jordan/RiderProjects/MonoSlime/DungeonSlime/bin/Debug/net8.0/Content/Fonts/04b_30.fnt

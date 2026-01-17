@@ -1,19 +1,9 @@
-﻿using System;
-using Gum.Forms;
+﻿using Gum.Forms;
 using Gum.Forms.Controls;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using MonoGameGum;
 using MonoGameLibrary;
-using MonoGameLibrary;
-using MonoGameLibrary.Graphics;
-using MonoGameLibrary.Graphics.Tiles;
-using MonoGameLibrary.Input;
 using MonoGameLibrary.Scenes;
-using MonoGameLibrary.Shapes;
 
 namespace DungeonSlime;
 

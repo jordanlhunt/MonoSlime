@@ -19,9 +19,7 @@ public class AnimatedButton : Button
     private const string UNFOCUSED_BUTTON = "unfocused-button";
     private const string FOCUSED_BUTTON_ANIMATION = "focused-button-animation";
     #endregion
-
     #region Constructor
-
     public AnimatedButton(TextureAtlas textureAtlas)
     {
         // Each Forms control has a general Visual property that
@@ -86,17 +84,14 @@ public class AnimatedButton : Button
             };
             focusedAnimationChain.Add(animationFrame);
         }
-
         // Assign both animation chains to the nine-slice background
         background.AnimationChains = new AnimationChainList
         {
             unfocusedAnimationChain,
             focusedAnimationChain,
         };
-
         // Reset all state to default so we don't have unexpected variable assignments
         buttonVisual.ButtonCategory.ResetAllStates();
-
         // Get teh enabled (default/unfocused) state
         StateSave enabledSaveState = buttonVisual.States.Enabled;
         enabledSaveState.Apply = () =>
@@ -118,7 +113,6 @@ public class AnimatedButton : Button
         // Create the highlighted state for (for mouse hover) by cloning the enabled state since they appear the same
         StateSave highlightedStateSave = buttonVisual.States.Highlighted;
         highlightedStateSave.Apply = enabledSaveState.Apply;
-
         // Add event handlers for keyboard input
         KeyDown += HandleKeyDown;
         // Add event handler for the mouse hover focus
@@ -131,7 +125,6 @@ public class AnimatedButton : Button
         {
             HandleTab(TabDirection.Up, loop: true);
         }
-
         if (keyEventArgs.Key == Keys.Right)
         {
             HandleTab(TabDirection.Down, loop: true);
