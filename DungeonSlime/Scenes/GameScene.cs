@@ -1,6 +1,9 @@
 ﻿using System;
+using DungeonSlime.UI;
 using Gum.DataTypes;
 using Gum.Forms.Controls;
+using Gum.Forms.DefaultVisuals;
+using Gum.Managers;
 using Gum.Wireframe;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -8,12 +11,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameGum;
 using MonoGameGum.GueDeriving;
+using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
 using MonoGameLibrary.Graphics.Tiles;
 using MonoGameLibrary.Input;
+using MonoGameLibrary.Scenes;
 using MonoGameLibrary.Shapes;
 
-namespace MonoGameLibrary.Scenes;
+namespace DungeonSlime.Scenes;
 
 public class GameScene : Scene
 {
@@ -28,7 +33,9 @@ public class GameScene : Scene
     private const string AtlasBatAnimation = "bat-animation";
     private const string TilemapDefinitionLocation = "Images/tilemap-definition.xml";
     private const string EquipmentProSpriteFontLocation = "Fonts/EquipmentPro";
-    private const string UISoundEffectLocation = "Sounds/Click_15";
+    private const string UI_SOUND_EFFECT_LOCATION = "Sounds/Click_15";
+    private const string CUSTOM_FONT_FILE = "Fonts/04b_30.fnt";
+    private const string AtlasPanelBackground = "panel-background";
 
     #endregion
 
@@ -50,7 +57,8 @@ public class GameScene : Scene
     private Circle batBoundsCircle;
     private int currentScore;
     private Panel pausePanel;
-    private Button resumeButton;
+    private AnimatedButton resumeButton;
+    private TextureAtlas textureAtlas;
     private SoundEffect uiSoundEffect;
 
     #endregion
@@ -84,7 +92,7 @@ public class GameScene : Scene
 
     public override void LoadContent()
     {
-        TextureAtlas textureAtlas = TextureAtlas.FromFile(Core.Content, AtlasDefinitionLocation);
+        textureAtlas = TextureAtlas.FromFile(Core.Content, AtlasDefinitionLocation);
         player = textureAtlas.CreateAnimatedSprite(AtlasSlimeAnimation);
         bat = textureAtlas.CreateAnimatedSprite(AtlasBatAnimation);
         tileMap = Tilemap.LoadFromFile(ContentManager, TilemapDefinitionLocation);
@@ -94,7 +102,7 @@ public class GameScene : Scene
         bounceSoundEffect = ContentManager.Load<SoundEffect>(BounceSoundEffectLocation);
         collectSoundEffect = ContentManager.Load<SoundEffect>(CollectSoundEffectLocation);
         spriteFont = ContentManager.Load<SpriteFont>(EquipmentProSpriteFontLocation);
-        uiSoundEffect = ContentManager.Load<SoundEffect>(UISoundEffectLocation);
+        uiSoundEffect = ContentManager.Load<SoundEffect>(UI_SOUND_EFFECT_LOCATION);
     }
 
     public override void Update(GameTime gameTime)
@@ -347,25 +355,38 @@ public class GameScene : Scene
         pausePanel.Visual.Width = 264;
         pausePanel.IsVisible = false;
         pausePanel.AddToRoot();
-        ColoredRectangleRuntime background = new ColoredRectangleRuntime();
+
+        TextureRegion backgroundRegion = textureAtlas.GetRegion(AtlasPanelBackground);
+        NineSliceRuntime background = new NineSliceRuntime
+        {
+            Texture = backgroundRegion.Texture,
+            TextureAddress = TextureAddress.Custom,
+            TextureHeight = backgroundRegion.Height,
+            TextureLeft = backgroundRegion.SourceRectangle.Left,
+            TextureTop = backgroundRegion.SourceRectangle.Top,
+            TextureWidth = backgroundRegion.Width,
+        };
         background.Dock(Dock.Fill);
-        background.Color = Color.DarkBlue;
         pausePanel.AddChild(background);
         TextRuntime textRuntime = new TextRuntime
         {
             Text = "Paused",
             X = 10f,
             Y = 10f,
+            UseCustomFont = true,
+            CustomFontFile = CUSTOM_FONT_FILE,
+            FontScale = .05f,
         };
         pausePanel.AddChild(textRuntime);
-        resumeButton = new Button { Text = "Resume" };
+        resumeButton = new AnimatedButton(textureAtlas);
         resumeButton.Anchor(Anchor.BottomLeft);
+        resumeButton.Text = "Resume";
         resumeButton.Visual.X = 9f;
         resumeButton.Visual.Y = -9f;
-        resumeButton.Visual.Width = 80;
         resumeButton.Click += HandleResumeButtonClicked;
         pausePanel.AddChild(resumeButton);
-        Button quitButton = new Button { Text = "Quit" };
+        AnimatedButton quitButton = new AnimatedButton(textureAtlas);
+        quitButton.Text = "QUIT";
         quitButton.Anchor(Anchor.BottomRight);
         quitButton.Visual.X = -9f;
         quitButton.Visual.Y = -9f;

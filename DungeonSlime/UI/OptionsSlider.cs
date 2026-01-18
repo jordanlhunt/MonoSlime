@@ -13,7 +13,7 @@ public class OptionsSlider : Slider
 {
     #region Constants
     private const string PANEL_BACKGROUND_ATLAS_STRING = "panel-background";
-    private const string CUSTOM_FONT_FILE = "fonts/04b_30.fnt";
+    private const string CUSTOM_FONT_FILE = "Fonts/04b_30.fnt";
     private const string DEFAULT_UNINITIALIZED_TEXT = "DEFAULT_UNINITIALIZED_TEXT";
     private const string OFF_BACKGROUND_ATLAS_STRING = "slider-off-background";
     private const string MIDDLE_BACKGROUND_ATLAS_STRING = "slider-middle-background";
@@ -22,6 +22,7 @@ public class OptionsSlider : Slider
     private const string OFF_TEXT_STRING = "OFF";
     private const string MAX_TEXT_STRING = "MAX";
     #endregion
+
     #region Readonly Variables
     private readonly float containerHeight = 55f;
     private readonly float containerWidth = 264f;
@@ -42,46 +43,76 @@ public class OptionsSlider : Slider
     private readonly int offAndMaxTextRed = 70;
     private readonly int offAndMaxTextBlue = 86;
     private readonly int offAndMaxTextGreen = 130;
-    private readonly float offAndMaxTextFontScale = .5f;
+    private readonly float offAndMaxTextFontScale = .25f;
     #endregion
+
     #region Member Variables
-    // Reference to the text label that displays the slider's title
     private TextRuntime textInstance;
-
-    // Reference to the rectangle that visually represents the current value
     private ColoredRectangleRuntime currentValueFillRectangle;
-
-    // Define colors for focused and unfocused states
     private Color unfocusedStateColor = Color.Gray;
     private Color focusedStateColor = Color.White;
     #endregion
+
     #region Properties
-    public string TextInstanceText
+    public string Text
     {
         get => textInstance.Text;
         set => textInstance.Text = value;
     }
     #endregion
+
     #region Constructor
     /// <summary>
     /// Creates a new OptionsSlider instance using graphics from the specified texture atlas
     /// </summary>
     /// <param name="textureAtlas">The texture atlas containing slider graphics.</param>
-    ///
-    ///
-    ///
     public OptionsSlider(TextureAtlas textureAtlas)
     {
-        // Create the top-level container for all the visual elements
-        ContainerRuntime topLevelContainerRuntime = new ContainerRuntime
+        ContainerRuntime topLevelContainerRuntime = CreateTopLevelContainer();
+        NineSliceRuntime background = CreateBackground(textureAtlas);
+        topLevelContainerRuntime.AddChild(background);
+
+        textInstance = CreateTitleText();
+        topLevelContainerRuntime.AddChild(textInstance);
+
+        ContainerRuntime innerContainerRuntime = CreateInnerContainer();
+        topLevelContainerRuntime.AddChild(innerContainerRuntime);
+
+        PopulateInnerContainer(innerContainerRuntime, textureAtlas);
+        CreateSliderStates(topLevelContainerRuntime, background, innerContainerRuntime);
+
+        Visual = topLevelContainerRuntime;
+        IsMoveToPointEnabled = true;
+
+        AttachEventHandlers();
+    }
+    #endregion
+
+    #region Container Creation Methods
+    private ContainerRuntime CreateTopLevelContainer()
+    {
+        return new ContainerRuntime { Height = containerHeight, Width = containerWidth };
+    }
+
+    private ContainerRuntime CreateInnerContainer()
+    {
+        return new ContainerRuntime
         {
-            Height = containerHeight,
-            Width = containerWidth,
+            Height = innerContainerRuntimeHeight,
+            Width = innerContainerRuntimeWidth,
+            X = innerContainerRuntimeX,
+            Y = innerContainerRuntimeY,
         };
+    }
+    #endregion
+
+    #region Background Creation Methods
+    private NineSliceRuntime CreateBackground(TextureAtlas textureAtlas)
+    {
         TextureRegion backgroundTextureRegion = textureAtlas.GetRegion(
             PANEL_BACKGROUND_ATLAS_STRING
         );
-        // Create the background panel that contains everything
+
         NineSliceRuntime background = new NineSliceRuntime
         {
             Texture = textureAtlas.Texture,
@@ -92,32 +123,16 @@ public class OptionsSlider : Slider
             TextureWidth = backgroundTextureRegion.Width,
         };
         background.Dock(Gum.Wireframe.Dock.Fill);
-        topLevelContainerRuntime.AddChild(background);
-        // Create the title text element
-        textInstance = new TextRuntime
-        {
-            CustomFontFile = CUSTOM_FONT_FILE,
-            UseCustomFont = true,
-            FontScale = textInstanceFontScale,
-            Text = DEFAULT_UNINITIALIZED_TEXT,
-            X = textInstanceX,
-            Y = textInstanceY,
-            WidthUnits = DimensionUnitType.RelativeToChildren,
-        };
-        topLevelContainerRuntime.AddChild(textInstance);
-        // Create the container for the slider track and the decorative elements
-        ContainerRuntime innerContainerRuntime = new ContainerRuntime
-        {
-            Height = innerContainerRuntimeHeight,
-            Width = innerContainerRuntimeWidth,
-            X = innerContainerRuntimeX,
-            Y = innerContainerRuntimeY,
-        };
-        topLevelContainerRuntime.AddChild(innerContainerRuntime);
-        // Create the "OFF" side of the slider (left side)
+
+        return background;
+    }
+
+    private NineSliceRuntime CreateOffBackground(TextureAtlas textureAtlas)
+    {
         TextureRegion offBackgroundTextureRegion = textureAtlas.GetRegion(
             OFF_BACKGROUND_ATLAS_STRING
         );
+
         NineSliceRuntime offBackground = new NineSliceRuntime
         {
             Texture = textureAtlas.Texture,
@@ -130,11 +145,16 @@ public class OptionsSlider : Slider
             WidthUnits = DimensionUnitType.Absolute,
         };
         offBackground.Dock(Gum.Wireframe.Dock.Left);
-        innerContainerRuntime.AddChild(offBackground);
-        // Create the middle track portion of the slider
+
+        return offBackground;
+    }
+
+    private NineSliceRuntime CreateMiddleBackground(TextureAtlas textureAtlas)
+    {
         TextureRegion middleBackgroundTextureRegion = textureAtlas.GetRegion(
             MIDDLE_BACKGROUND_ATLAS_STRING
         );
+
         NineSliceRuntime middleBackground = new NineSliceRuntime
         {
             Texture = middleBackgroundTextureRegion.Texture,
@@ -148,11 +168,16 @@ public class OptionsSlider : Slider
         };
         middleBackground.Dock(Gum.Wireframe.Dock.Left);
         middleBackground.X = middleBackgroundX;
-        innerContainerRuntime.AddChild(middleBackground);
-        // Create the "MAX" side of the slider (right end)
+
+        return middleBackground;
+    }
+
+    private NineSliceRuntime CreateMaxBackground(TextureAtlas textureAtlas)
+    {
         TextureRegion maxBackgroundTextureRegion = textureAtlas.GetRegion(
             MAX_BACKGROUND_ATLAS_STRING
         );
+
         NineSliceRuntime maxBackground = new NineSliceRuntime
         {
             Texture = maxBackgroundTextureRegion.Texture,
@@ -165,9 +190,58 @@ public class OptionsSlider : Slider
             WidthUnits = DimensionUnitType.Absolute,
         };
         maxBackground.Dock(Gum.Wireframe.Dock.Right);
-        innerContainerRuntime.AddChild(maxBackground);
-        // Create the interactive track that responds to clicks
-        // The special name "TrackInstance" is required for slider functionality
+
+        return maxBackground;
+    }
+    #endregion
+
+    #region Text Creation Methods
+    private TextRuntime CreateTitleText()
+    {
+        return new TextRuntime
+        {
+            CustomFontFile = CUSTOM_FONT_FILE,
+            UseCustomFont = true,
+            FontScale = textInstanceFontScale,
+            Text = DEFAULT_UNINITIALIZED_TEXT,
+            X = textInstanceX,
+            Y = textInstanceY,
+            WidthUnits = DimensionUnitType.RelativeToChildren,
+        };
+    }
+
+    private TextRuntime CreateOffText()
+    {
+        return new TextRuntime
+        {
+            Red = offAndMaxTextRed,
+            Green = offAndMaxTextGreen,
+            Blue = offAndMaxTextBlue,
+            CustomFontFile = CUSTOM_FONT_FILE,
+            FontScale = offAndMaxTextFontScale,
+            UseCustomFont = true,
+            Text = OFF_TEXT_STRING,
+        };
+    }
+
+    private TextRuntime CreateMaxText()
+    {
+        return new TextRuntime
+        {
+            Red = offAndMaxTextRed,
+            Green = offAndMaxTextGreen,
+            Blue = offAndMaxTextBlue,
+            CustomFontFile = CUSTOM_FONT_FILE,
+            FontScale = offAndMaxTextFontScale,
+            UseCustomFont = true,
+            Text = MAX_TEXT_STRING,
+        };
+    }
+    #endregion
+
+    #region Track and Fill Creation Methods
+    private ContainerRuntime CreateTrackInstance()
+    {
         ContainerRuntime trackInstance = new ContainerRuntime
         {
             Name = specialNameTrackInstance,
@@ -175,47 +249,110 @@ public class OptionsSlider : Slider
             Width = trackInstanceWidth,
         };
         trackInstance.Dock(Gum.Wireframe.Dock.Fill);
-        middleBackground.AddChild(trackInstance);
-        // Create a fill rectangle that visually displays the current value
-        currentValueFillRectangle = new ColoredRectangleRuntime
+
+        return trackInstance;
+    }
+
+    private ColoredRectangleRuntime CreateCurrentValueFillRectangle()
+    {
+        ColoredRectangleRuntime fillRectangle = new ColoredRectangleRuntime
         {
             Width = DEFAULT_FILLRECTANGLE_WIDTH,
             WidthUnits = DimensionUnitType.PercentageOfParent,
         };
-        currentValueFillRectangle.Dock(Gum.Wireframe.Dock.Left);
+        fillRectangle.Dock(Gum.Wireframe.Dock.Left);
+
+        return fillRectangle;
+    }
+    #endregion
+
+    #region Inner Container Population
+    private void PopulateInnerContainer(
+        ContainerRuntime innerContainerRuntime,
+        TextureAtlas textureAtlas
+    )
+    {
+        NineSliceRuntime offBackground = CreateOffBackground(textureAtlas);
+        innerContainerRuntime.AddChild(offBackground);
+
+        NineSliceRuntime middleBackground = CreateMiddleBackground(textureAtlas);
+        innerContainerRuntime.AddChild(middleBackground);
+
+        NineSliceRuntime maxBackground = CreateMaxBackground(textureAtlas);
+        innerContainerRuntime.AddChild(maxBackground);
+
+        ContainerRuntime trackInstance = CreateTrackInstance();
+        middleBackground.AddChild(trackInstance);
+
+        currentValueFillRectangle = CreateCurrentValueFillRectangle();
         trackInstance.AddChild(currentValueFillRectangle);
-        // Add "OFF" text to the left end
-        TextRuntime offText = new TextRuntime
-        {
-            Red = offAndMaxTextRed,
-            Green = offAndMaxTextGreen,
-            Blue = offAndMaxTextRed,
-            CustomFontFile = CUSTOM_FONT_FILE,
-            FontScale = offAndMaxTextFontScale,
-            Text = OFF_TEXT_STRING,
-        };
+
+        AddEndLabels(offBackground, maxBackground);
+    }
+
+    private void AddEndLabels(NineSliceRuntime offBackground, NineSliceRuntime maxBackground)
+    {
+        TextRuntime offText = CreateOffText();
         offText.Anchor(Gum.Wireframe.Anchor.Center);
         offBackground.AddChild(offText);
-        // Add "MAX" text to the right end
-        TextRuntime maxText = new TextRuntime
-        {
-            Red = offAndMaxTextRed,
-            Green = offAndMaxTextGreen,
-            Blue = offAndMaxTextBlue,
-            CustomFontFile = CUSTOM_FONT_FILE,
-            FontScale = offAndMaxTextFontScale,
-            Text = MAX_TEXT_STRING,
-        };
+
+        TextRuntime maxText = CreateMaxText();
         maxText.Anchor(Gum.Wireframe.Anchor.Center);
         maxBackground.AddChild(maxText);
-        // Create a Slider state category - SliderSliderCategoryName is required
+    }
+    #endregion
+
+    #region State Management
+    private void CreateSliderStates(
+        ContainerRuntime topLevelContainerRuntime,
+        NineSliceRuntime background,
+        ContainerRuntime innerContainerRuntime
+    )
+    {
         StateSaveCategory sliderCategory = new StateSaveCategory
         {
             Name = Slider.SliderCategoryName,
         };
         topLevelContainerRuntime.AddCategory(sliderCategory);
-        // Create the enabled (default/unfocused) state
-        StateSave enabledStateSave = new StateSave
+
+        // Get references to all backgrounds from inner container
+        NineSliceRuntime offBackground = innerContainerRuntime.Children[0] as NineSliceRuntime;
+        NineSliceRuntime middleBackground = innerContainerRuntime.Children[1] as NineSliceRuntime;
+        NineSliceRuntime maxBackground = innerContainerRuntime.Children[2] as NineSliceRuntime;
+
+        StateSave enabledStateSave = CreateEnabledState(
+            background,
+            offBackground,
+            middleBackground,
+            maxBackground
+        );
+        sliderCategory.States.Add(enabledStateSave);
+
+        StateSave focusedStateSave = CreateFocusedState(
+            background,
+            offBackground,
+            middleBackground,
+            maxBackground
+        );
+        sliderCategory.States.Add(focusedStateSave);
+
+        StateSave highlighted = enabledStateSave.Clone();
+
+        StateSave highlightedPlusFocusedStateSave = focusedStateSave.Clone();
+        highlighted.Name = FrameworkElement.HighlightedFocusedStateName;
+        highlightedPlusFocusedStateSave.Name = FrameworkElement.HighlightedFocusedStateName;
+        sliderCategory.States.Add(highlighted);
+        sliderCategory.States.Add(highlightedPlusFocusedStateSave);
+    }
+
+    private StateSave CreateEnabledState(
+        NineSliceRuntime background,
+        NineSliceRuntime offBackground,
+        NineSliceRuntime middleBackground,
+        NineSliceRuntime maxBackground
+    )
+    {
+        return new StateSave
         {
             Name = FrameworkElement.EnabledStateName,
             Apply = () =>
@@ -228,9 +365,16 @@ public class OptionsSlider : Slider
                 currentValueFillRectangle.Color = unfocusedStateColor;
             },
         };
-        sliderCategory.States.Add(enabledStateSave);
-        // Create the focused state
-        StateSave focusedStateSave = new StateSave
+    }
+
+    private StateSave CreateFocusedState(
+        NineSliceRuntime background,
+        NineSliceRuntime offBackground,
+        NineSliceRuntime middleBackground,
+        NineSliceRuntime maxBackground
+    )
+    {
+        return new StateSave
         {
             Name = FrameworkElement.FocusedStateName,
             Apply = () =>
@@ -243,46 +387,30 @@ public class OptionsSlider : Slider
                 currentValueFillRectangle.Color = focusedStateColor;
             },
         };
-        sliderCategory.States.Add(focusedStateSave);
-        // Create the highlighted+focused state by cloning the focused state
-        StateSave highlightedPlusFocusedStateSave = focusedStateSave.Clone();
-        highlightedPlusFocusedStateSave.Name = FrameworkElement.HighlightedFocusedStateName;
-        sliderCategory.States.Add(highlightedPlusFocusedStateSave);
-        // Assign the configured container as this slider's visual
-        Visual = topLevelContainerRuntime;
-        // Enable click-to-point functionality for the slider
-        IsMoveToPointEnabled = true;
-        // Add event handlers
+    }
+    #endregion
+
+    #region Event Handler Management
+    private void AttachEventHandlers()
+    {
         Visual.RollOn += HandleRollOn;
         ValueChanged += HandleValueChanged;
         ValueChangedByUi += HandleValueChangedByUi;
     }
 
-    /// <summary>
-    /// Automatically focuses the slider when the user interacts with it
-    /// </summary>
     private void HandleValueChangedByUi(object sender, EventArgs e)
     {
         IsFocused = true;
     }
 
-    /// <summary>
-    /// Automatically focuses the slider when the mouse hovers over it
-    /// </summary>
     private void HandleRollOn(object sender, EventArgs e)
     {
         IsFocused = true;
     }
 
-    /// <summary>
-    /// Updates the fill rectangle width to visually represent the current value
-    /// </summary>
     private void HandleValueChanged(object sender, EventArgs e)
     {
-        // Calculate the ratio of the current value within its range
         double ratio = (Value - Minimum) / (Maximum - Minimum);
-        // Update the fill rectangle width as a percentage
-        // _fillRectangle uses percentage width units, so we multiply by 100
         currentValueFillRectangle.Width = 100 * (float)ratio;
     }
     #endregion

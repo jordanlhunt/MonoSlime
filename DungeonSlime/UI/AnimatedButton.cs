@@ -104,7 +104,7 @@ public class AnimatedButton : Button
         focusedStateSave.Apply = () =>
         {
             // When focused, use the focused animation and enable animation playback
-            background.CurrentChainName = focusedStateSave.Name;
+            background.CurrentChainName = focusedAnimationChain.Name;
             background.Animate = true;
         };
         // Create the highlighted+focused state (for mouse hover while focused)
