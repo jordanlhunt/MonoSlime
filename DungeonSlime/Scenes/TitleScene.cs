@@ -199,17 +199,17 @@ public class TitleScene : Scene
 
         AnimatedButton startButton = new AnimatedButton(textureAtlas);
         startButton.Anchor(Gum.Wireframe.Anchor.BottomLeft);
-        startButton.Visual.X = 50;
-        startButton.Visual.Y = -12;
-        startButton.Visual.Width = 70;
-        startButton.Text = "Game Start!";
+        startButton.X = 50;
+        startButton.Y = -12;
+        startButton.Width = 70;
+        startButton.Text = "Start!";
         startButton.Click += HandleStartButtonClicked;
 
         optionsButton = new AnimatedButton(textureAtlas);
         optionsButton.Anchor(Gum.Wireframe.Anchor.BottomRight);
-        optionsButton.Visual.X = -50;
-        optionsButton.Visual.Y = -12;
-        optionsButton.Visual.Width = 70;
+        optionsButton.X = -50;
+        optionsButton.Y = -12;
+        optionsButton.Width = 70;
         optionsButton.Text = "Options";
 
         optionsButton.Click += HandleOptionsButtonClicked;
@@ -239,7 +239,7 @@ public class TitleScene : Scene
         musicSlider.Name = "MusicSlider";
         musicSlider.Text = "MUSIC";
         musicSlider.Anchor(Gum.Wireframe.Anchor.Top);
-        musicSlider.Visual.Y = 30.0f;
+        musicSlider.Y = 30.0f;
         musicSlider.Minimum = 0.0f;
         musicSlider.Maximum = 1.0f;
         musicSlider.Value = Core.Audio.CurrentSongVolume;
@@ -252,7 +252,7 @@ public class TitleScene : Scene
         soundEffectsSlider.Name = "SfxSlider";
         soundEffectsSlider.Text = "SFX";
         soundEffectsSlider.Anchor(Gum.Wireframe.Anchor.Top);
-        soundEffectsSlider.Visual.Y = 93;
+        soundEffectsSlider.Y = 93;
         soundEffectsSlider.Minimum = 0.0f;
         soundEffectsSlider.Maximum = 1.0f;
         soundEffectsSlider.Value = Core.Audio.CurrentSoundEffectVolume;
