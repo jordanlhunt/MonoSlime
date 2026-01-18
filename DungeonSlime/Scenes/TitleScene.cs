@@ -70,9 +70,10 @@ public class TitleScene : Scene
         slimeTextPosition = new Vector2(SLIME_TEXT_X, SLIME_TEXT_Y);
         slimeTextOrigin = textSize * 0.5f;
         pressEnterOrigin = textSize * 0.5f;
+        pressEnterPosition = new Vector2(PRESS_ENTER_X, PRESS_ENTER_Y);
         repeatingBackgroundPatternOffset = Vector2.Zero;
         repeatingBackgroundPatternDestination = Core.GraphicsDevice.PresentationParameters.Bounds;
-        InitializeUI();
+        InitializeUi();
     }
 
     public override void LoadContent()
@@ -314,9 +315,12 @@ public class TitleScene : Scene
         optionsButton.IsFocused = true;
     }
 
-    private void InitializeUI()
+    private void InitializeUi()
     {
-        GumService.Default.Root.Children.Clear();
+        if (GumService.Default.Root.Children != null)
+        {
+            GumService.Default.Root.Children.Clear();
+        }
         CreateTitlePanel();
         CreateOptionsPanel();
     }

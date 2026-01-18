@@ -3,11 +3,11 @@
   <SourceFile>/home/jordan/RiderProjects/MonoSlime/DungeonSlime/Content/Images/NewAvatar.png</SourceFile>
   <SourceTime>2025-11-14T08:13:59.7651792-06:00</SourceTime>
   <DestFile>/home/jordan/RiderProjects/MonoSlime/DungeonSlime/Content/bin/DesktopGL/Images/NewAvatar.xnb</DestFile>
-  <DestTime>2026-01-18T08:52:27.0153373-06:00</DestTime>
+  <DestTime>2026-01-18T15:46:11.7731928-06:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2025-10-20T09:25:32-05:00</ImporterTime>
+  <ImporterTime>2025-06-02T05:31:02-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2025-10-20T09:25:32-05:00</ProcessorTime>
+  <ProcessorTime>2025-06-02T05:31:02-05:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>
