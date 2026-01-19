@@ -2,7 +2,7 @@ using System;
 using Gum.DataTypes;
 using Gum.DataTypes.Variables;
 using Gum.Forms.Controls;
-using Gum.Forms.DefaultVisuals;
+using Gum.Forms.DefaultVisuals.V3;
 using Gum.Graphics.Animation;
 using Gum.Managers;
 using Microsoft.Xna.Framework.Input;
@@ -14,10 +14,10 @@ namespace DungeonSlime.UI;
 public class AnimatedButton : Button
 {
     #region Constants
-    private const string FONT_FILE_STRING = "Fonts/04b_30.fnt";
-    private const string START = "START";
-    private const string UNFOCUSED_BUTTON = "unfocused-button";
-    private const string FOCUSED_BUTTON_ANIMATION = "focused-button-animation";
+    private const string FontFileString = "Fonts/04b_30.fnt";
+    private const string Start = "START";
+    private const string UnfocusedButton = "unfocused-button";
+    private const string FocusedButtonAnimation = "focused-button-animation";
     #endregion
     #region Constructor
     public AnimatedButton(TextureAtlas textureAtlas)
@@ -39,18 +39,18 @@ public class AnimatedButton : Button
         background.Color = Microsoft.Xna.Framework.Color.White;
         // texture coordinates for the background are set down below
         TextRuntime textInstance = buttonVisual.TextInstance;
-        textInstance.Text = START;
+        textInstance.Text = Start;
         textInstance.Red = 70;
         textInstance.Green = 86;
         textInstance.Blue = 130;
         textInstance.UseCustomFont = true;
-        textInstance.CustomFontFile = FONT_FILE_STRING;
+        textInstance.CustomFontFile = FontFileString;
         textInstance.FontScale = .25f;
         textInstance.Anchor(Gum.Wireframe.Anchor.Center);
         textInstance.Width = 0;
         textInstance.WidthUnits = DimensionUnitType.RelativeToChildren;
         // Get the texture region for the unfocused button state from the textureAtlas
-        TextureRegion unfocusedTextureRegion = textureAtlas.GetRegion(UNFOCUSED_BUTTON);
+        TextureRegion unfocusedTextureRegion = textureAtlas.GetRegion(UnfocusedButton);
         // Create an animation chain for the unfocused state with a single frame
         AnimationChain unfocusedAnimationChain = new AnimationChain();
         unfocusedAnimationChain.Name = nameof(unfocusedAnimationChain);
@@ -65,9 +65,7 @@ public class AnimatedButton : Button
         };
         unfocusedAnimationChain.Add(unfocusedAnimationFrame);
         // Get the multi-frame animation for the focused button state from the atlas
-        Animation focusedTextureAtlasAnimation = textureAtlas.GetAnimation(
-            FOCUSED_BUTTON_ANIMATION
-        );
+        Animation focusedTextureAtlasAnimation = textureAtlas.GetAnimation(FocusedButtonAnimation);
         // Create an Animation Chain for the focused state using all the frames from the atlas animation
         AnimationChain focusedAnimationChain = new AnimationChain();
         focusedAnimationChain.Name = nameof(focusedAnimationChain);
@@ -79,7 +77,7 @@ public class AnimatedButton : Button
                 BottomCoordinate = textureRegion.BottomTextureCoordinate,
                 LeftCoordinate = textureRegion.LeftTextureCoordinate,
                 RightCoordinate = textureRegion.RightTextureCoordinate,
-                FrameLength = (float)focusedTextureAtlasAnimation.TimeBetweenFrames.TotalSeconds,
+                FrameLength = (float)focusedTextureAtlasAnimation.Delay.TotalSeconds,
                 Texture = textureRegion.Texture,
             };
             focusedAnimationChain.Add(animationFrame);
@@ -119,6 +117,11 @@ public class AnimatedButton : Button
         buttonVisual.RollOn += HandleRollOn;
     }
 
+    #endregion
+
+    #region Event Handlers
+
+
     private void HandleKeyDown(object sender, KeyEventArgs keyEventArgs)
     {
         if (keyEventArgs.Key == Keys.Left)
@@ -135,5 +138,6 @@ public class AnimatedButton : Button
     {
         IsFocused = true;
     }
+
     #endregion
 }

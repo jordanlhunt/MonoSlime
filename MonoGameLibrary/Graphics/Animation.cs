@@ -8,7 +8,7 @@ public class Animation
     #region Properties
 
     public List<TextureRegion> Frames { get; set; }
-    public TimeSpan TimeBetweenFrames { get; set; }
+    public TimeSpan Delay { get; set; }
 
     #endregion
 
@@ -17,13 +17,13 @@ public class Animation
     public Animation()
     {
         Frames = new List<TextureRegion>();
-        TimeBetweenFrames = TimeSpan.FromMilliseconds(100);
+        Delay = TimeSpan.FromMilliseconds(100);
     }
 
-    public Animation(List<TextureRegion> frames, TimeSpan timeBetweenFrames)
+    public Animation(List<TextureRegion> frames, TimeSpan delay)
     {
         this.Frames = frames;
-        this.TimeBetweenFrames = timeBetweenFrames;
+        this.Delay = delay;
     }
 
     #endregion

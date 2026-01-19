@@ -52,7 +52,7 @@ public class Game1 : Core
 
     public void InitializeGum()
     {
-        GumService.Default.Initialize(this, DefaultVisualsVersion.V2);
+        GumService.Default.Initialize(this, DefaultVisualsVersion.V3);
         if (GumService.Default.ContentLoader != null)
         {
             GumService.Default.ContentLoader.XnaContentManager = Core.Content;

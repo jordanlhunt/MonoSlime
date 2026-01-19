@@ -43,9 +43,9 @@ public class AnimatedSprite : Sprite
     public void Update(GameTime gameTime)
     {
         elapsedTime += gameTime.ElapsedGameTime;
-        if (elapsedTime >= currentAnimation.TimeBetweenFrames)
+        if (elapsedTime >= currentAnimation.Delay)
         {
-            elapsedTime -= currentAnimation.TimeBetweenFrames;
+            elapsedTime -= currentAnimation.Delay;
             currentFrame++;
             if (currentFrame >= currentAnimation.Frames.Count)
             {

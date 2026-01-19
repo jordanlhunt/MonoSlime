@@ -8,22 +8,22 @@
     ".NETCoreApp,Version=v8.0": {
       "MonoGameLibrary/1.0.0": {
         "dependencies": {
-          "Gum.MonoGame": "2025.11.23.2",
+          "Gum.MonoGame": "2026.1.12.1",
           "MonoGame.Framework.DesktopGL": "3.8.4.1"
         },
         "runtime": {
           "MonoGameLibrary.dll": {}
         }
       },
-      "FlatRedBall.GumCommon/2025.11.23.2": {
+      "FlatRedBall.GumCommon/2026.1.12.1": {
         "dependencies": {
           "FlatRedBall.InterpolationCore": "2025.4.22.1",
           "System.Numerics.Vectors": "4.5.0"
         },
         "runtime": {
           "lib/net8.0/GumCommon.dll": {
-            "assemblyVersion": "2025.11.23.2",
-            "fileVersion": "2025.11.23.2"
+            "assemblyVersion": "2026.1.12.1",
+            "fileVersion": "2026.1.12.1"
           }
         }
       },
@@ -39,15 +39,15 @@
           }
         }
       },
-      "Gum.MonoGame/2025.11.23.2": {
+      "Gum.MonoGame/2026.1.12.1": {
         "dependencies": {
-          "FlatRedBall.GumCommon": "2025.11.23.2",
+          "FlatRedBall.GumCommon": "2026.1.12.1",
           "TextCopy": "6.2.1"
         },
         "runtime": {
           "lib/net8.0/MonoGameGum.dll": {
-            "assemblyVersion": "2025.11.23.2",
-            "fileVersion": "2025.11.23.2"
+            "assemblyVersion": "2026.1.12.1",
+            "fileVersion": "2026.1.12.1"
           }
         }
       },
@@ -186,12 +186,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "FlatRedBall.GumCommon/2025.11.23.2": {
+    "FlatRedBall.GumCommon/2026.1.12.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-PHwBzqtgYLl5E+8Ppnat7PFSuW99Qcir9W8swIScatcAc+W2KsuQCyXE8NvDR21tZCA5Eg2DkTYc1JCbUCoPrA==",
-      "path": "flatredball.gumcommon/2025.11.23.2",
-      "hashPath": "flatredball.gumcommon.2025.11.23.2.nupkg.sha512"
+      "sha512": "sha512-uQ4FMap2yQwHKMYq3UaXZhjN+pP+VMOohiV//I+dhHwEfTCnTbpgBKG/F6S3Tw2X0XpOa2gbHx6nEwbLxpScTw==",
+      "path": "flatredball.gumcommon/2026.1.12.1",
+      "hashPath": "flatredball.gumcommon.2026.1.12.1.nupkg.sha512"
     },
     "FlatRedBall.InterpolationCore/2025.4.22.1": {
       "type": "package",
@@ -200,12 +200,12 @@
       "path": "flatredball.interpolationcore/2025.4.22.1",
       "hashPath": "flatredball.interpolationcore.2025.4.22.1.nupkg.sha512"
     },
-    "Gum.MonoGame/2025.11.23.2": {
+    "Gum.MonoGame/2026.1.12.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-FRtDUlrM8clZ3jD/3X+4U+Rp3snKrGys+UMxR6JGVt/dk8V1MGPqhxYRdOa1+vtvYC+WzYgVbbI+4scTZESihA==",
-      "path": "gum.monogame/2025.11.23.2",
-      "hashPath": "gum.monogame.2025.11.23.2.nupkg.sha512"
+      "sha512": "sha512-YUequTT1NnyM96NXU3bWHsgCmdAjvCOc0ezEJwdl0mu0vSLui2GMRn+9noLWDU81TwTzmeAVvQPFvsXiw4ysog==",
+      "path": "gum.monogame/2026.1.12.1",
+      "hashPath": "gum.monogame.2026.1.12.1.nupkg.sha512"
     },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",

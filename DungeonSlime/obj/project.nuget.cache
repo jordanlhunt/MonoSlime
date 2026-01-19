@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "i7vhysSvfj8=",
+  "dgSpecHash": "pftfqk8oWCM=",
   "success": true,
   "projectFilePath": "/home/jordan/RiderProjects/MonoSlime/DungeonSlime/DungeonSlime.csproj",
   "expectedPackageFiles": [
-    "/home/jordan/.nuget/packages/flatredball.gumcommon/2025.11.23.2/flatredball.gumcommon.2025.11.23.2.nupkg.sha512",
+    "/home/jordan/.nuget/packages/flatredball.gumcommon/2026.1.12.1/flatredball.gumcommon.2026.1.12.1.nupkg.sha512",
     "/home/jordan/.nuget/packages/flatredball.interpolationcore/2025.4.22.1/flatredball.interpolationcore.2025.4.22.1.nupkg.sha512",
-    "/home/jordan/.nuget/packages/gum.monogame/2025.11.23.2/gum.monogame.2025.11.23.2.nupkg.sha512",
+    "/home/jordan/.nuget/packages/gum.monogame/2026.1.12.1/gum.monogame.2026.1.12.1.nupkg.sha512",
     "/home/jordan/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/home/jordan/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/7.0.0/microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "/home/jordan/.nuget/packages/monogame.content.builder.task/3.8.4.1/monogame.content.builder.task.3.8.4.1.nupkg.sha512",

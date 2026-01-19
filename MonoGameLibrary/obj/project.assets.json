@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net8.0": {
-      "FlatRedBall.GumCommon/2025.11.23.2": {
+      "FlatRedBall.GumCommon/2026.1.12.1": {
         "type": "package",
         "dependencies": {
           "FlatRedBall.InterpolationCore": "2025.4.22.1",
@@ -43,10 +43,10 @@
           }
         }
       },
-      "Gum.MonoGame/2025.11.23.2": {
+      "Gum.MonoGame/2026.1.12.1": {
         "type": "package",
         "dependencies": {
-          "FlatRedBall.GumCommon": "2025.11.23.2",
+          "FlatRedBall.GumCommon": "2026.1.12.1",
           "TextCopy": "6.2.1"
         },
         "compile": {
@@ -252,19 +252,17 @@
     }
   },
   "libraries": {
-    "FlatRedBall.GumCommon/2025.11.23.2": {
-      "sha512": "PHwBzqtgYLl5E+8Ppnat7PFSuW99Qcir9W8swIScatcAc+W2KsuQCyXE8NvDR21tZCA5Eg2DkTYc1JCbUCoPrA==",
+    "FlatRedBall.GumCommon/2026.1.12.1": {
+      "sha512": "uQ4FMap2yQwHKMYq3UaXZhjN+pP+VMOohiV//I+dhHwEfTCnTbpgBKG/F6S3Tw2X0XpOa2gbHx6nEwbLxpScTw==",
       "type": "package",
-      "path": "flatredball.gumcommon/2025.11.23.2",
+      "path": "flatredball.gumcommon/2026.1.12.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "flatredball.gumcommon.2025.11.23.2.nupkg.sha512",
+        "flatredball.gumcommon.2026.1.12.1.nupkg.sha512",
         "flatredball.gumcommon.nuspec",
         "lib/net8.0/GumCommon.dll",
-        "lib/net8.0/GumCommon.xml",
-        "lib/netstandard2.0/GumCommon.dll",
-        "lib/netstandard2.0/GumCommon.xml"
+        "lib/net8.0/GumCommon.xml"
       ]
     },
     "FlatRedBall.InterpolationCore/2025.4.22.1": {
@@ -282,14 +280,14 @@
         "lib/netstandard2.0/FlatRedBall.InterpolationCore.xml"
       ]
     },
-    "Gum.MonoGame/2025.11.23.2": {
-      "sha512": "FRtDUlrM8clZ3jD/3X+4U+Rp3snKrGys+UMxR6JGVt/dk8V1MGPqhxYRdOa1+vtvYC+WzYgVbbI+4scTZESihA==",
+    "Gum.MonoGame/2026.1.12.1": {
+      "sha512": "YUequTT1NnyM96NXU3bWHsgCmdAjvCOc0ezEJwdl0mu0vSLui2GMRn+9noLWDU81TwTzmeAVvQPFvsXiw4ysog==",
       "type": "package",
-      "path": "gum.monogame/2025.11.23.2",
+      "path": "gum.monogame/2026.1.12.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "gum.monogame.2025.11.23.2.nupkg.sha512",
+        "gum.monogame.2026.1.12.1.nupkg.sha512",
         "gum.monogame.nuspec",
         "lib/net8.0/MonoGameGum.dll",
         "lib/net8.0/MonoGameGum.xml",
@@ -607,7 +605,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "Gum.MonoGame >= 2025.11.23.2",
+      "Gum.MonoGame >= 2026.1.12.1",
       "MonoGame.Framework.DesktopGL >= 3.8.*"
     ]
   },
@@ -657,7 +655,7 @@
         "dependencies": {
           "Gum.MonoGame": {
             "target": "Package",
-            "version": "[2025.11.23.2, )"
+            "version": "[2026.1.12.1, )"
           },
           "MonoGame.Framework.DesktopGL": {
             "suppressParent": "All",

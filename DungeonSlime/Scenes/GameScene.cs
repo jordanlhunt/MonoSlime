@@ -87,7 +87,7 @@ public class GameScene : Scene
         float scoreTextYOrigin = spriteFont.MeasureString(ScoreString).Y * .5f;
         scoreTextOrigin = new Vector2(0, scoreTextYOrigin);
         AssignRandomBatVelocity();
-        InitializeUI();
+        InitializeUi();
     }
 
     public override void LoadContent()
@@ -406,9 +406,12 @@ public class GameScene : Scene
         Core.ChangeScene(new TitleScene());
     }
 
-    private void InitializeUI()
+    private void InitializeUi()
     {
-        GumService.Default.Root.Children.Clear();
+        if (GumService.Default.Root.Children != null)
+        {
+            GumService.Default.Root.Children.Clear();
+        }
         CreatePausePanel();
     }
     #endregion

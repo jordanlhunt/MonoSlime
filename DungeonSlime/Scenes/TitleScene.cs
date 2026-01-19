@@ -202,15 +202,13 @@ public class TitleScene : Scene
         startButton.Anchor(Gum.Wireframe.Anchor.BottomLeft);
         startButton.X = 50;
         startButton.Y = -12;
-        startButton.Width = 70;
-        startButton.Text = "Start!";
+        startButton.Text = "Start";
         startButton.Click += HandleStartButtonClicked;
 
         optionsButton = new AnimatedButton(textureAtlas);
         optionsButton.Anchor(Gum.Wireframe.Anchor.BottomRight);
         optionsButton.X = -50;
         optionsButton.Y = -12;
-        optionsButton.Width = 70;
         optionsButton.Text = "Options";
 
         optionsButton.Click += HandleOptionsButtonClicked;
@@ -227,6 +225,7 @@ public class TitleScene : Scene
         optionsPanel.Dock(Gum.Wireframe.Dock.Fill);
         optionsPanel.IsVisible = false;
         optionsPanel.AddToRoot();
+
         TextRuntime optionsText = new TextRuntime();
         optionsText.X = 10;
         optionsText.Y = 10;
@@ -249,6 +248,7 @@ public class TitleScene : Scene
         musicSlider.ValueChanged += HandleMusicSliderValueChanged;
         musicSlider.ValueChangeCompleted += HandleMusicSliderValueChangeCompleted;
         optionsPanel.AddChild(musicSlider);
+
         OptionsSlider soundEffectsSlider = new OptionsSlider(textureAtlas);
         soundEffectsSlider.Name = "SfxSlider";
         soundEffectsSlider.Text = "SFX";
