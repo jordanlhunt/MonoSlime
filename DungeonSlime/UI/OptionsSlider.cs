@@ -242,13 +242,10 @@ public class OptionsSlider : Slider
     #region Track and Fill Creation Methods
     private ContainerRuntime CreateTrackInstance()
     {
-        ContainerRuntime trackInstance = new ContainerRuntime
-        {
-            Name = specialNameTrackInstance,
-            Height = trackInstanceHeight,
-            Width = trackInstanceWidth,
-        };
+        ContainerRuntime trackInstance = new ContainerRuntime { Name = specialNameTrackInstance };
         trackInstance.Dock(Gum.Wireframe.Dock.Fill);
+        trackInstance.Height = trackInstanceHeight;
+        trackInstance.Width = trackInstanceWidth;
 
         return trackInstance;
     }
@@ -339,7 +336,7 @@ public class OptionsSlider : Slider
         StateSave highlighted = enabledStateSave.Clone();
 
         StateSave highlightedPlusFocusedStateSave = focusedStateSave.Clone();
-        highlighted.Name = FrameworkElement.HighlightedFocusedStateName;
+        highlighted.Name = FrameworkElement.HighlightedStateName;
         highlightedPlusFocusedStateSave.Name = FrameworkElement.HighlightedFocusedStateName;
         sliderCategory.States.Add(highlighted);
         sliderCategory.States.Add(highlightedPlusFocusedStateSave);
