@@ -124,19 +124,19 @@ public class MouseInputInfo
         {
             case MouseButton.Left:
                 return CurrentState.LeftButton == ButtonState.Pressed
-                       && PreviousState.LeftButton == ButtonState.Released;
+                    && PreviousState.LeftButton == ButtonState.Released;
             case MouseButton.Middle:
                 return CurrentState.MiddleButton == ButtonState.Pressed
-                       && PreviousState.MiddleButton == ButtonState.Released;
+                    && PreviousState.MiddleButton == ButtonState.Released;
             case MouseButton.Right:
                 return CurrentState.RightButton == ButtonState.Pressed
-                       && PreviousState.RightButton == ButtonState.Released;
+                    && PreviousState.RightButton == ButtonState.Released;
             case MouseButton.XButton1:
                 return CurrentState.XButton1 == ButtonState.Pressed
-                       && PreviousState.XButton1 == ButtonState.Released;
+                    && PreviousState.XButton1 == ButtonState.Released;
             case MouseButton.XButton2:
                 return CurrentState.XButton2 == ButtonState.Pressed
-                       && PreviousState.XButton2 == ButtonState.Released;
+                    && PreviousState.XButton2 == ButtonState.Released;
             default:
                 return false;
         }
@@ -148,19 +148,19 @@ public class MouseInputInfo
         {
             case MouseButton.Left:
                 return CurrentState.LeftButton == ButtonState.Released
-                       && PreviousState.LeftButton == ButtonState.Pressed;
+                    && PreviousState.LeftButton == ButtonState.Pressed;
             case MouseButton.Middle:
                 return CurrentState.MiddleButton == ButtonState.Released
-                       && PreviousState.MiddleButton == ButtonState.Pressed;
+                    && PreviousState.MiddleButton == ButtonState.Pressed;
             case MouseButton.Right:
                 return CurrentState.RightButton == ButtonState.Released
-                       && PreviousState.RightButton == ButtonState.Pressed;
+                    && PreviousState.RightButton == ButtonState.Pressed;
             case MouseButton.XButton1:
                 return CurrentState.XButton1 == ButtonState.Released
-                       && PreviousState.XButton1 == ButtonState.Pressed;
+                    && PreviousState.XButton1 == ButtonState.Pressed;
             case MouseButton.XButton2:
                 return CurrentState.XButton2 == ButtonState.Released
-                       && PreviousState.XButton2 == ButtonState.Pressed;
+                    && PreviousState.XButton2 == ButtonState.Pressed;
             default:
                 return false;
         }
