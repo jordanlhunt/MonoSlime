@@ -65,7 +65,7 @@ public class Bat
         if (normalVector.Y != 0)
         {
             // Move slightly away from the wall direction of the normal
-            newPosition.Y = normalVector.Y * (sprite.Height * .1f);
+            newPosition.Y += normalVector.Y * (sprite.Height * .1f);
         }
 
         Position = newPosition;

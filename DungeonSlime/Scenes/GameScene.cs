@@ -152,6 +152,7 @@ public class GameScene : Scene
         _bat.RandomizeVelocity();
         PositionBatAwayFromSlime();
         _score = 0;
+        _ui.UpdateScoreText(_score);
         _state = GameState.Playing;
     }
 

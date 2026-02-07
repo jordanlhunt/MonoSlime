@@ -85,6 +85,7 @@ public class Slime
         nextMovmementDirection = head.Direction;
         // Zero out the movement time
         movementTicks = TimeSpan.Zero;
+        _inputBuffer = new Queue<Vector2>(MAX_BUFFER_SIZE);
     }
 
     public void HandleInput()
@@ -109,9 +110,17 @@ public class Slime
 
         // Only Direction change IF and ONLY IF it is not reversing the current direction. This prevents the slime from backing into itself.
         float dotProduct = Vector2.Dot(newDirection, slimeSegments[0].Direction);
-        if (dotProduct >= 0)
+
+        if (newDirection != Vector2.Zero && _inputBuffer.Count < MAX_BUFFER_SIZE)
         {
-            nextMovmementDirection = newDirection;
+            // If the buffer is empty, validate against the current direction;
+            // otherwise, validate against the last buffered direction
+            Vector2 validateAgainst =
+                _inputBuffer.Count > 0 ? _inputBuffer.Last() : slimeSegments[0].Direction;
+            if (dotProduct >= 0)
+            {
+                nextMovmementDirection = newDirection;
+            }
         }
     }
 
@@ -190,6 +199,10 @@ public class Slime
 
     private void Move()
     {
+        if (_inputBuffer.Count > 0)
+        {
+            nextMovmementDirection = _inputBuffer.Dequeue();
+        }
         SlimeSegment head = slimeSegments[0];
         // Update the direction the head is supposed to move in to the next direction caches
         head.Direction = nextMovmementDirection;
@@ -210,9 +223,8 @@ public class Slime
                 {
                     BodyCollision.Invoke(this, EventArgs.Empty);
                 }
+                return;
             }
-
-            return;
         }
     }
 
