@@ -20,7 +20,6 @@ public static class GameController
 
     #region Public Methods
 
-
     /// <summary>
     /// Returns true if the player has triggered the "move up" action.
     /// </summary>
@@ -94,5 +93,6 @@ public static class GameController
             Keyboard.WasKeyJustPressed(Keys.Enter) || Player1GamePad.WasButtonJustPressed(Buttons.A)
         );
     }
+
     #endregion
 }

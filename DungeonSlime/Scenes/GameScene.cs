@@ -112,6 +112,7 @@ public class GameScene : Scene
         {
             return;
         }
+
         player.Update(gameTime);
         bat.Update(gameTime);
         HandleKeyboardInput();
@@ -300,6 +301,7 @@ public class GameScene : Scene
         {
             PauseGame();
         }
+
         if (gamePadZero.IsButtonDown(Buttons.A))
         {
             speed *= 1.5f;
@@ -412,7 +414,9 @@ public class GameScene : Scene
         {
             GumService.Default.Root.Children.Clear();
         }
+
         CreatePausePanel();
     }
+
     #endregion
 }

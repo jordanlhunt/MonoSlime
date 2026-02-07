@@ -14,12 +14,16 @@ namespace DungeonSlime.UI;
 public class AnimatedButton : Button
 {
     #region Constants
+
     private const string FontFileString = "Fonts/04b_30.fnt";
     private const string Start = "START";
     private const string UnfocusedButton = "unfocused-button";
     private const string FocusedButtonAnimation = "focused-button-animation";
+
     #endregion
+
     #region Constructor
+
     public AnimatedButton(TextureAtlas textureAtlas)
     {
         // Each Forms control has a general Visual property that
@@ -82,6 +86,7 @@ public class AnimatedButton : Button
             };
             focusedAnimationChain.Add(animationFrame);
         }
+
         // Assign both animation chains to the nine-slice background
         background.AnimationChains = new AnimationChainList
         {
@@ -121,13 +126,13 @@ public class AnimatedButton : Button
 
     #region Event Handlers
 
-
     private void HandleKeyDown(object sender, KeyEventArgs keyEventArgs)
     {
         if (keyEventArgs.Key == Keys.Left)
         {
             HandleTab(TabDirection.Up, loop: true);
         }
+
         if (keyEventArgs.Key == Keys.Right)
         {
             HandleTab(TabDirection.Down, loop: true);

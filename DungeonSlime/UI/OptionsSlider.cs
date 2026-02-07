@@ -12,6 +12,7 @@ namespace DungeonSlime.UI;
 public class OptionsSlider : Slider
 {
     #region Constants
+
     private const string PANEL_BACKGROUND_ATLAS_STRING = "panel-background";
     private const string CUSTOM_FONT_FILE = "Fonts/04b_30.fnt";
     private const string DEFAULT_UNINITIALIZED_TEXT = "DEFAULT_UNINITIALIZED_TEXT";
@@ -21,9 +22,11 @@ public class OptionsSlider : Slider
     private const float DEFAULT_FILLRECTANGLE_WIDTH = 90f;
     private const string OFF_TEXT_STRING = "OFF";
     private const string MAX_TEXT_STRING = "MAX";
+
     #endregion
 
     #region Readonly Variables
+
     private readonly float containerHeight = 55f;
     private readonly float containerWidth = 264f;
     private readonly float textInstanceFontScale = .5f;
@@ -44,24 +47,30 @@ public class OptionsSlider : Slider
     private readonly int offAndMaxTextBlue = 86;
     private readonly int offAndMaxTextGreen = 130;
     private readonly float offAndMaxTextFontScale = .25f;
+
     #endregion
 
     #region Member Variables
+
     private TextRuntime textInstance;
     private ColoredRectangleRuntime currentValueFillRectangle;
     private Color unfocusedStateColor = Color.Gray;
     private Color focusedStateColor = Color.White;
+
     #endregion
 
     #region Properties
+
     public string Text
     {
         get => textInstance.Text;
         set => textInstance.Text = value;
     }
+
     #endregion
 
     #region Constructor
+
     /// <summary>
     /// Creates a new OptionsSlider instance using graphics from the specified texture atlas
     /// </summary>
@@ -86,9 +95,11 @@ public class OptionsSlider : Slider
 
         AttachEventHandlers();
     }
+
     #endregion
 
     #region Container Creation Methods
+
     private ContainerRuntime CreateTopLevelContainer()
     {
         return new ContainerRuntime { Height = containerHeight, Width = containerWidth };
@@ -104,9 +115,11 @@ public class OptionsSlider : Slider
             Y = innerContainerRuntimeY,
         };
     }
+
     #endregion
 
     #region Background Creation Methods
+
     private NineSliceRuntime CreateBackground(TextureAtlas textureAtlas)
     {
         TextureRegion backgroundTextureRegion = textureAtlas.GetRegion(
@@ -193,9 +206,11 @@ public class OptionsSlider : Slider
 
         return maxBackground;
     }
+
     #endregion
 
     #region Text Creation Methods
+
     private TextRuntime CreateTitleText()
     {
         return new TextRuntime
@@ -237,9 +252,11 @@ public class OptionsSlider : Slider
             Text = MAX_TEXT_STRING,
         };
     }
+
     #endregion
 
     #region Track and Fill Creation Methods
+
     private ContainerRuntime CreateTrackInstance()
     {
         ContainerRuntime trackInstance = new ContainerRuntime { Name = specialNameTrackInstance };
@@ -261,9 +278,11 @@ public class OptionsSlider : Slider
 
         return fillRectangle;
     }
+
     #endregion
 
     #region Inner Container Population
+
     private void PopulateInnerContainer(
         ContainerRuntime innerContainerRuntime,
         TextureAtlas textureAtlas
@@ -297,9 +316,11 @@ public class OptionsSlider : Slider
         maxText.Anchor(Gum.Wireframe.Anchor.Center);
         maxBackground.AddChild(maxText);
     }
+
     #endregion
 
     #region State Management
+
     private void CreateSliderStates(
         ContainerRuntime topLevelContainerRuntime,
         NineSliceRuntime background,
@@ -385,9 +406,11 @@ public class OptionsSlider : Slider
             },
         };
     }
+
     #endregion
 
     #region Event Handler Management
+
     private void AttachEventHandlers()
     {
         Visual.RollOn += HandleRollOn;
@@ -410,5 +433,6 @@ public class OptionsSlider : Slider
         double ratio = (Value - Minimum) / (Maximum - Minimum);
         currentValueFillRectangle.Width = 100 * (float)ratio;
     }
+
     #endregion
 }

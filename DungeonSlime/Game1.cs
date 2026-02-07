@@ -57,6 +57,7 @@ public class Game1 : Core
         {
             GumService.Default.ContentLoader.XnaContentManager = Core.Content;
         }
+
         FrameworkElement.KeyboardsForUiControl.Add(GumService.Default.Keyboard);
         FrameworkElement.GamePadsForUiControl.AddRange(GumService.Default.Gamepads);
         FrameworkElement.TabReverseKeyCombos.Add(

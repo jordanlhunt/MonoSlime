@@ -93,5 +93,6 @@ public class Bat
     {
         sprite.Draw(Core.SpriteBatch, Position);
     }
+
     #endregion
 }

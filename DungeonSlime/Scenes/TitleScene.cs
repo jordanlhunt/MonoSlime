@@ -55,6 +55,7 @@ public class TitleScene : Scene
     private AnimatedButton optionsButton;
     private AnimatedButton optionsBackButton;
     private TextureAtlas textureAtlas;
+
     #endregion
 
     #region Public Methods
@@ -321,8 +322,10 @@ public class TitleScene : Scene
         {
             GumService.Default.Root.Children.Clear();
         }
+
         CreateTitlePanel();
         CreateOptionsPanel();
     }
+
     #endregion
 }
