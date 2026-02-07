@@ -1,20 +1,14 @@
 ﻿using System;
+using DungeonSlime.GameObjects;
 using DungeonSlime.UI;
-using Gum.DataTypes;
 using Gum.Forms.Controls;
-using Gum.Forms.DefaultVisuals;
-using Gum.Managers;
-using Gum.Wireframe;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGameGum;
-using MonoGameGum.GueDeriving;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
 using MonoGameLibrary.Graphics.Tiles;
-using MonoGameLibrary.Input;
 using MonoGameLibrary.Scenes;
 using MonoGameLibrary.Shapes;
 
@@ -23,399 +17,302 @@ namespace DungeonSlime.Scenes;
 public class GameScene : Scene
 {
     #region Constants
+    private enum GameState
+    {
+        Playing,
+        Paused,
+        GameOver,
+    }
 
-    private const string ScoreString = "SCORE";
-    private const float MovementSpeed = 5.0f;
-    private const string BounceSoundEffectLocation = "Sounds/bounce";
-    private const string CollectSoundEffectLocation = "Sounds/collect";
-    private const string AtlasDefinitionLocation = "Images/atlas-definition.xml";
-    private const string AtlasSlimeAnimation = "slime-animation";
-    private const string AtlasBatAnimation = "bat-animation";
-    private const string TilemapDefinitionLocation = "Images/tilemap-definition.xml";
-    private const string EquipmentProSpriteFontLocation = "Fonts/EquipmentPro";
+    private const string DUNGEON_TEXT = "Dungeon";
+    private const string SLIME_TEXT = "Slime";
+    private const string PRESS_ENTER_TEXT = "Press Enter To Start";
+    private const string EQUIPMENT_PRO_LOCATION = "Fonts/EquipmentPro";
+    private const string COMPASS_PRO_LOCATION = "Fonts/CompassPro";
+    private const string REPEATING_BACKGROUND_LOCATION = "Images/background-pattern";
     private const string UI_SOUND_EFFECT_LOCATION = "Sounds/Click_15";
     private const string CUSTOM_FONT_FILE = "Fonts/04b_30.fnt";
-    private const string AtlasPanelBackground = "panel-background";
-
+    private const string ATLAS_DEFINITION_LOCATION = "Images/atlas-definition.xml";
+    private const string TilemapDefinitionLocation = "Images/tilemap-definition.xml";
+    private const string TileMapSlimeAnimation = "slime-animation";
+    private const string TileMapBatAnimation = "bat-animation";
+    private const float TileMapScale = 4.0f;
+    private const string BounceSoundEffectLocation = "Sounds/bounce";
+    private const string CollectSoundEffectLocation = "Sounds/collect";
     #endregion
 
-    #region Member Variables
+    #region Fields
+    // Reference to the slime.
+    private Slime _slime;
 
-    private AnimatedSprite player;
-    private AnimatedSprite bat;
-    private Vector2 playerPosition;
-    private Vector2 batPosition;
-    private Vector2 batVelocity;
-    private Vector2 scoreTextPosition;
-    private Vector2 scoreTextOrigin;
-    private Tilemap tileMap;
-    private Rectangle roomBoundsRectangle;
-    private SoundEffect bounceSoundEffect;
-    private SoundEffect collectSoundEffect;
-    private SpriteFont spriteFont;
-    private Circle playerBoundsCircle;
-    private Circle batBoundsCircle;
-    private int currentScore;
-    private Panel pausePanel;
-    private AnimatedButton resumeButton;
-    private TextureAtlas textureAtlas;
-    private SoundEffect uiSoundEffect;
+    // Reference to the bat.
+    private Bat _bat;
 
+    // Defines the tilemap to draw.
+    private Tilemap _tilemap;
+
+    // Defines the bounds of the room that the slime and bat are contained within.
+    private Rectangle _roomBounds;
+
+    // The sound effect to play when the slime eats a bat.
+    private SoundEffect _collectSoundEffect;
+
+    // Tracks the players score.
+    private int _score;
+    private GameSceneUI _ui;
+    private GameState _state;
     #endregion
 
     #region Public Methods
 
+
     public override void Initialize()
     {
+        // LoadContent is during the base.Initialize()
         base.Initialize();
         Core.ExitOnEscape = false;
-        Rectangle screenBoundsRectangle = Core.GraphicsDevice.PresentationParameters.Bounds;
-        roomBoundsRectangle = new Rectangle(
-            (int)tileMap.TileWidth,
-            (int)tileMap.TileHeight,
-            screenBoundsRectangle.Width - (int)tileMap.TileWidth * 2,
-            screenBoundsRectangle.Height - (int)tileMap.TileHeight * 2
-        );
-        int centerRow = tileMap.Rows / 2;
-        int centerColumn = tileMap.Columns / 2;
-        playerPosition = new Vector2(
-            centerColumn * tileMap.TileWidth,
-            centerRow * tileMap.TileHeight
-        );
-        batPosition = new Vector2(roomBoundsRectangle.Left, roomBoundsRectangle.Top);
-        scoreTextPosition = new Vector2(roomBoundsRectangle.Left, tileMap.TileHeight * .5f);
-        float scoreTextYOrigin = spriteFont.MeasureString(ScoreString).Y * .5f;
-        scoreTextOrigin = new Vector2(0, scoreTextYOrigin);
-        AssignRandomBatVelocity();
-        InitializeUi();
+        _roomBounds = Core.GraphicsDevice.PresentationParameters.Bounds;
+        _roomBounds.Inflate(-_tilemap.TileWidth, -_tilemap.TileHeight);
+        _slime.BodyCollision += OnSlimeBodyCollision;
+        GumService.Default.Root.Children.Clear();
+        InitializeUI();
+        InitializeNewGame();
     }
 
     public override void LoadContent()
     {
-        textureAtlas = TextureAtlas.FromFile(Core.Content, AtlasDefinitionLocation);
-        player = textureAtlas.CreateAnimatedSprite(AtlasSlimeAnimation);
-        bat = textureAtlas.CreateAnimatedSprite(AtlasBatAnimation);
-        tileMap = Tilemap.LoadFromFile(ContentManager, TilemapDefinitionLocation);
-        player.Scale = new Vector2(4.0f, 4.0f);
-        bat.Scale = new Vector2(4.0f, 4.0f);
-        tileMap.Scale = new Vector2(4.0f, 4.0f);
-        bounceSoundEffect = ContentManager.Load<SoundEffect>(BounceSoundEffectLocation);
-        collectSoundEffect = ContentManager.Load<SoundEffect>(CollectSoundEffectLocation);
-        spriteFont = ContentManager.Load<SpriteFont>(EquipmentProSpriteFontLocation);
-        uiSoundEffect = ContentManager.Load<SoundEffect>(UI_SOUND_EFFECT_LOCATION);
+        base.LoadContent();
+        TextureAtlas textureAtlas = TextureAtlas.FromFile(Core.Content, ATLAS_DEFINITION_LOCATION);
+        _tilemap = Tilemap.LoadFromFile(ContentManager, TilemapDefinitionLocation);
+        _tilemap.Scale = new Vector2(TileMapScale, TileMapScale);
+        AnimatedSprite slimeAnimation = textureAtlas.CreateAnimatedSprite(TileMapSlimeAnimation);
+        slimeAnimation.Scale = new Vector2(TileMapScale, TileMapScale);
+        _slime = new Slime(slimeAnimation);
+        AnimatedSprite batAnimation = textureAtlas.CreateAnimatedSprite(TileMapBatAnimation);
+        batAnimation.Scale = new Vector2(TileMapScale, TileMapScale);
+        SoundEffect bounceSoundEffect = ContentManager.Load<SoundEffect>(BounceSoundEffectLocation);
+        _collectSoundEffect = ContentManager.Load<SoundEffect>(CollectSoundEffectLocation);
+        _bat = new Bat(batAnimation, bounceSoundEffect);
     }
 
     public override void Update(GameTime gameTime)
     {
-        GumService.Default.Update(gameTime);
-        if (pausePanel.IsVisible)
+        _ui.Update(gameTime);
+        if (_state == GameState.GameOver)
         {
             return;
         }
 
-        player.Update(gameTime);
-        bat.Update(gameTime);
-        HandleKeyboardInput();
-        HandleGamePadInput();
-        HandleSlimeBounds();
-        Vector2 newBatPosition = batPosition + batVelocity;
-        newBatPosition = HandleBatBounds(newBatPosition);
-        batPosition = newBatPosition;
-        HandleSlimeBatIntersection();
+        if (GameController.Pause())
+        {
+            TogglePause();
+        }
+
+        if (_state == GameState.Paused)
+        {
+            return;
+        }
+        _slime.Update(gameTime);
+        _bat.Update(gameTime);
+        CollisionChecks();
     }
 
     public override void Draw(GameTime gameTime)
     {
+        // Clear the back buffer
         Core.GraphicsDevice.Clear(Color.MonoGameOrange);
         Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        tileMap.Draw(Core.SpriteBatch);
-        player.Draw(Core.SpriteBatch, playerPosition);
-        bat.Draw(Core.SpriteBatch, batPosition);
-        Core.SpriteBatch.DrawString(
-            spriteFont,
-            ScoreString + $": {currentScore}",
-            scoreTextPosition,
-            Color.White,
-            0.0f,
-            scoreTextOrigin,
-            1.0f,
-            SpriteEffects.None,
-            0.0f
-        );
+        _tilemap.Draw(Core.SpriteBatch);
+        _slime.Draw();
+        _bat.Draw();
         Core.SpriteBatch.End();
-        GumService.Default.Draw();
+        _ui.Draw();
     }
 
     #endregion
-
     #region Private Methods
 
-    private void AssignRandomBatVelocity()
-    {
-        float angle = (float)(Random.Shared.NextDouble() * Math.PI * 2);
-        float x = (float)Math.Cos(angle);
-        float y = (float)Math.Sin(angle);
-        Vector2 direction = new Vector2(x, y);
-        batVelocity = direction * MovementSpeed;
+    private void InitializeUI()
+    { // Clear out any previous UI element just in case we came from a different scene
+        GumService.Default.Root.Children.Clear();
+        // Create a new UI instance
+        _ui = new GameSceneUI();
+        // Subscribe to the events from the GameSceneUI
+        _ui.ResumeButtonClick += OnResumeButtonClicked;
+        _ui.RetryButtonClick += OnRetryButtonClicked;
+        _ui.QuitButtonClick += OnQuitButtonClicked;
     }
 
-    private void HandleSlimeBounds()
+    private void InitializeNewGame()
     {
-        playerBoundsCircle = new Circle(
-            (int)(playerPosition.X + (player.Width * 0.5f)),
-            (int)(playerPosition.Y + (player.Height * .5f)),
-            (int)(player.Width * .5f)
-        );
-        if (playerBoundsCircle.Left < roomBoundsRectangle.Left)
-        {
-            playerPosition.X = roomBoundsRectangle.Left;
-        }
-        else if (playerBoundsCircle.Right > roomBoundsRectangle.Right)
-        {
-            playerPosition.X = roomBoundsRectangle.Right - player.Width;
-        }
-
-        if (playerBoundsCircle.Top < roomBoundsRectangle.Top)
-        {
-            playerPosition.Y = roomBoundsRectangle.Top;
-        }
-        else if (playerBoundsCircle.Bottom > roomBoundsRectangle.Bottom)
-        {
-            playerPosition.Y = roomBoundsRectangle.Bottom - player.Height;
-        }
+        Vector2 slimePosition = new Vector2();
+        slimePosition.X = (_tilemap.Columns / 2) * _tilemap.TileWidth;
+        slimePosition.Y = (_tilemap.Rows / 2) * _tilemap.TileHeight;
+        _slime.Initialize(slimePosition, _tilemap.TileWidth);
+        _bat.RandomizeVelocity();
+        PositionBatAwayFromSlime();
+        _score = 0;
+        _state = GameState.Playing;
     }
 
-    private Vector2 HandleBatBounds(Vector2 newBatPosition)
+    private void OnQuitButtonClicked(object sender, EventArgs e)
     {
-        batBoundsCircle = new Circle(
-            (int)(newBatPosition.X + (bat.Width * 0.5f)),
-            (int)(newBatPosition.Y + (bat.Height * .5f)),
-            (int)(bat.Width * 0.5f)
-        );
-        Vector2 normal = Vector2.Zero;
-        if (batBoundsCircle.Left < roomBoundsRectangle.Left)
-        {
-            normal.X = Vector2.UnitX.X;
-            newBatPosition.X = roomBoundsRectangle.Left;
-        }
-        else if (batBoundsCircle.Right > roomBoundsRectangle.Right)
-        {
-            normal.X = -Vector2.UnitX.X;
-            newBatPosition.X = roomBoundsRectangle.Right - bat.Width;
-        }
-
-        if (batBoundsCircle.Top < roomBoundsRectangle.Top)
-        {
-            normal.Y = Vector2.UnitY.Y;
-            newBatPosition.Y = roomBoundsRectangle.Top;
-        }
-        else if (batBoundsCircle.Bottom > roomBoundsRectangle.Bottom)
-        {
-            normal.Y = -Vector2.UnitY.Y;
-            newBatPosition.Y = roomBoundsRectangle.Bottom - bat.Height;
-        }
-
-        if (normal != Vector2.Zero)
-        {
-            normal.Normalize();
-            batVelocity = Vector2.Reflect(batVelocity, normal);
-            Core.Audio.PlaySoundEffect(bounceSoundEffect);
-        }
-
-        return newBatPosition;
-    }
-
-    private void HandleSlimeBatIntersection()
-    {
-        if (playerBoundsCircle.IsIntersecting(batBoundsCircle))
-        {
-            int totalColumns =
-                Core.GraphicsDevice.PresentationParameters.BackBufferWidth / (int)bat.Width;
-            int totalRows =
-                Core.GraphicsDevice.PresentationParameters.BackBufferHeight / (int)bat.Height;
-            int column = Random.Shared.Next(0, totalColumns);
-            int row = Random.Shared.Next(0, totalRows);
-            batPosition = new Vector2(column * bat.Width, row * bat.Height);
-            AssignRandomBatVelocity();
-            Core.Audio.PlaySoundEffect(collectSoundEffect);
-            currentScore += 100;
-        }
-    }
-
-    private void HandleKeyboardInput()
-    {
-        KeyboardInputInfo keyboardInputInfo = Core.Input.Keyboard;
-        // if (Core.Input.Keyboard.WasKeyJustPressed(Keys.Escape))
-        // {
-        //     Core.ChangeScene(new TitleScene());
-        // }
-        if (Core.Input.Keyboard.WasKeyJustPressed(Keys.Escape))
-        {
-            PauseGame();
-        }
-
-        float speed = MovementSpeed;
-        if (keyboardInputInfo.IsKeyDown(Keys.Space))
-        {
-            speed *= 1.75f;
-        }
-
-        if (keyboardInputInfo.IsKeyDown(Keys.W) || keyboardInputInfo.IsKeyDown(Keys.Up))
-        {
-            playerPosition.Y -= speed;
-        }
-
-        if (keyboardInputInfo.IsKeyDown(Keys.S) || keyboardInputInfo.IsKeyDown(Keys.Down))
-        {
-            playerPosition.Y += speed;
-        }
-
-        if (keyboardInputInfo.IsKeyDown(Keys.D) || keyboardInputInfo.IsKeyDown(Keys.Right))
-        {
-            playerPosition.X += speed;
-        }
-
-        if (keyboardInputInfo.IsKeyDown(Keys.A) || keyboardInputInfo.IsKeyDown(Keys.Left))
-        {
-            playerPosition.X -= speed;
-        }
-
-        if (keyboardInputInfo.WasKeyJustPressed(Keys.M))
-        {
-            Core.Audio.ToggleMute();
-        }
-
-        if (keyboardInputInfo.WasKeyJustPressed((Keys.OemMinus)))
-        {
-            Core.Audio.CurrentSongVolume -= 0.1f;
-            Core.Audio.CurrentSoundEffectVolume -= 0.1f;
-        }
-    }
-
-    private void HandleGamePadInput()
-    {
-        // Get the gamepad info for gamepad one.
-        GamePadInputInfo gamePadZero = Core.Input.GamePads[(int)PlayerIndex.One];
-        float speed = MovementSpeed;
-        if (gamePadZero.WasButtonJustPressed(Buttons.Start))
-        {
-            PauseGame();
-        }
-
-        if (gamePadZero.IsButtonDown(Buttons.A))
-        {
-            speed *= 1.5f;
-            GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
-        }
-        else
-        {
-            GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
-        }
-
-        if (gamePadZero.LeftThumbStick != Vector2.Zero)
-        {
-            playerPosition.X += gamePadZero.LeftThumbStick.X * speed;
-            playerPosition.Y -= gamePadZero.LeftThumbStick.Y * speed;
-        }
-        else
-        {
-            if (gamePadZero.IsButtonDown(Buttons.DPadUp))
-            {
-                playerPosition.Y -= speed;
-            }
-
-            if (gamePadZero.IsButtonDown(Buttons.DPadDown))
-            {
-                playerPosition.Y += speed;
-            }
-
-            if (gamePadZero.IsButtonDown(Buttons.DPadLeft))
-            {
-                playerPosition.X -= speed;
-            }
-
-            if (gamePadZero.IsButtonDown(Buttons.DPadRight))
-            {
-                playerPosition.X += speed;
-            }
-        }
-    }
-
-    private void PauseGame()
-    {
-        pausePanel.IsVisible = true;
-        resumeButton.IsFocused = true;
-    }
-
-    private void CreatePausePanel()
-    {
-        pausePanel = new Panel();
-        pausePanel.Anchor(Anchor.Center);
-        pausePanel.Visual.WidthUnits = DimensionUnitType.Absolute;
-        pausePanel.Visual.HeightUnits = DimensionUnitType.Absolute;
-        pausePanel.Visual.Height = 70;
-        pausePanel.Visual.Width = 264;
-        pausePanel.IsVisible = false;
-        pausePanel.AddToRoot();
-
-        TextureRegion backgroundRegion = textureAtlas.GetRegion(AtlasPanelBackground);
-        NineSliceRuntime background = new NineSliceRuntime
-        {
-            Texture = backgroundRegion.Texture,
-            TextureAddress = TextureAddress.Custom,
-            TextureHeight = backgroundRegion.Height,
-            TextureLeft = backgroundRegion.SourceRectangle.Left,
-            TextureTop = backgroundRegion.SourceRectangle.Top,
-            TextureWidth = backgroundRegion.Width,
-        };
-        background.Dock(Dock.Fill);
-        pausePanel.AddChild(background);
-        TextRuntime textRuntime = new TextRuntime
-        {
-            Text = "Paused",
-            X = 10f,
-            Y = 10f,
-            UseCustomFont = true,
-            CustomFontFile = CUSTOM_FONT_FILE,
-            FontScale = .05f,
-        };
-        pausePanel.AddChild(textRuntime);
-        resumeButton = new AnimatedButton(textureAtlas);
-        resumeButton.Anchor(Anchor.BottomLeft);
-        resumeButton.Text = "Resume";
-        resumeButton.Visual.X = 9f;
-        resumeButton.Visual.Y = -9f;
-        resumeButton.Click += HandleResumeButtonClicked;
-        pausePanel.AddChild(resumeButton);
-        AnimatedButton quitButton = new AnimatedButton(textureAtlas);
-        quitButton.Text = "QUIT";
-        quitButton.Anchor(Anchor.BottomRight);
-        quitButton.Visual.X = -9f;
-        quitButton.Visual.Y = -9f;
-        quitButton.Click += HandleQuitButtonClicked;
-        pausePanel.AddChild(quitButton);
-    }
-
-    private void HandleResumeButtonClicked(object sender, EventArgs eventArgs)
-    {
-        Core.Audio.PlaySoundEffect(uiSoundEffect);
-        pausePanel.IsVisible = false;
-    }
-
-    private void HandleQuitButtonClicked(object sender, EventArgs eventArgs)
-    {
-        Core.Audio.PlaySoundEffect(uiSoundEffect);
         Core.ChangeScene(new TitleScene());
     }
 
-    private void InitializeUi()
+    private void OnRetryButtonClicked(object sender, EventArgs e)
     {
-        if (GumService.Default.Root.Children != null)
+        InitializeNewGame();
+    }
+
+    private void OnResumeButtonClicked(object sender, EventArgs e)
+    {
+        _state = GameState.Playing;
+    }
+
+    private void TogglePause()
+    {
+        if (_state == GameState.Paused)
         {
-            GumService.Default.Root.Children.Clear();
+            _ui.HidePausePanel();
+            _state = GameState.Playing;
+        }
+        else
+        {
+            _ui.ShowPausePanel();
+            _state = GameState.Paused;
+        }
+    }
+
+    private void CollisionChecks()
+    {
+        Circle slimeBounds = _slime.GetBounds();
+        Circle batBounds = _bat.GetBounds();
+
+        if (slimeBounds.IsIntersecting(batBounds))
+        {
+            PositionBatAwayFromSlime();
+            _bat.RandomizeVelocity();
+            _slime.Grow();
+            _score += 100;
+            _ui.UpdateScoreText(_score);
+            Core.Audio.PlaySoundEffect(_collectSoundEffect);
+        }
+        if (
+            slimeBounds.Top < _roomBounds.Top
+            || slimeBounds.Bottom > _roomBounds.Bottom
+            || slimeBounds.Left < _roomBounds.Left
+            || slimeBounds.Right > _roomBounds.Right
+        )
+        {
+            GameOver();
+            return;
+        }
+        if (batBounds.Top < _roomBounds.Top)
+        {
+            _bat.Bounce(Vector2.UnitY);
+        }
+        else if (batBounds.Bottom > _roomBounds.Bottom)
+        {
+            _bat.Bounce(-Vector2.UnitY);
         }
 
-        CreatePausePanel();
+        if (batBounds.Left < _roomBounds.Left)
+        {
+            _bat.Bounce(Vector2.UnitX);
+        }
+        else if (batBounds.Right > _roomBounds.Right)
+        {
+            _bat.Bounce(-Vector2.UnitX);
+        }
+    }
+
+    private void PositionBatAwayFromSlime()
+    {
+        // Calculate the position that is in the center of the bounds
+        // of the room.
+        float roomCenterX = _roomBounds.X + _roomBounds.Width * 0.5f;
+        float roomCenterY = _roomBounds.Y + _roomBounds.Height * 0.5f;
+        Vector2 roomCenter = new Vector2(roomCenterX, roomCenterY);
+
+        // Get the bounds of the slime and calculate the center position.
+        Circle slimeBounds = _slime.GetBounds();
+        Vector2 slimeCenter = new Vector2(slimeBounds.X, slimeBounds.Y);
+
+        // Calculate the distance vector from the center of the room to the
+        // center of the slime.
+        Vector2 centerToSlime = slimeCenter - roomCenter;
+
+        // Get the bounds of the bat.
+        Circle batBounds = _bat.GetBounds();
+
+        // Calculate the amount of padding we will add to the new position of
+        // the bat to ensure it is not sticking to walls
+        int padding = batBounds.Radius * 2;
+
+        // Calculate the new position of the bat by finding which component of
+        // the center to slime vector (X or Y) is larger and in which direction.
+        Vector2 newBatPosition = Vector2.Zero;
+        if (Math.Abs(centerToSlime.X) > Math.Abs(centerToSlime.Y))
+        {
+            // The slime is closer to either the left or right wall, so the Y
+            // position will be a random position between the top and bottom
+            // walls.
+            newBatPosition.Y = Random.Shared.Next(
+                _roomBounds.Top + padding,
+                _roomBounds.Bottom - padding
+            );
+
+            if (centerToSlime.X > 0)
+            {
+                // The slime is closer to the right side wall, so place the
+                // bat on the left side wall.
+                newBatPosition.X = _roomBounds.Left + padding;
+            }
+            else
+            {
+                // The slime is closer ot the left side wall, so place the
+                // bat on the right side wall.
+                newBatPosition.X = _roomBounds.Right - padding * 2;
+            }
+        }
+        else
+        {
+            // The slime is closer to either the top or bottom wall, so the X
+            // position will be a random position between the left and right
+            // walls.
+            newBatPosition.X = Random.Shared.Next(
+                _roomBounds.Left + padding,
+                _roomBounds.Right - padding
+            );
+
+            if (centerToSlime.Y > 0)
+            {
+                // The slime is closer to the top wall, so place the bat on the
+                // bottom wall.
+                newBatPosition.Y = _roomBounds.Top + padding;
+            }
+            else
+            {
+                // The slime is closer to the bottom wall, so place the bat on
+                // the top wall.
+                newBatPosition.Y = _roomBounds.Bottom - padding * 2;
+            }
+        }
+
+        // Assign the new bat position.
+        _bat.Position = newBatPosition;
+    }
+
+    private void OnSlimeBodyCollision(object send, EventArgs args)
+    {
+        GameOver();
+    }
+
+    private void GameOver()
+    {
+        _ui.ShowGameOverPanel();
+        _state = GameState.GameOver;
     }
 
     #endregion

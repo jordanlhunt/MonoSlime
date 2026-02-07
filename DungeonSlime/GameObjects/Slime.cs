@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
@@ -13,7 +14,7 @@ public class Slime
 
     // A constant value that represents the amount of time to way between movement updates
     private static readonly TimeSpan MovementTime = TimeSpan.FromMilliseconds(200);
-
+    private const int MAX_BUFFER_SIZE = 2;
     #endregion
 
     #region Fields
@@ -35,6 +36,8 @@ public class Slime
 
     // The animatedSprite used when drawing each slime segment
     private AnimatedSprite slimeSprite;
+
+    private Queue<Vector2> _inputBuffer;
 
     #endregion
 
