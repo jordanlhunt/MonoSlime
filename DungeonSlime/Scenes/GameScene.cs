@@ -17,6 +17,7 @@ namespace DungeonSlime.Scenes;
 public class GameScene : Scene
 {
     #region Constants
+
     private enum GameState
     {
         Playing,
@@ -24,24 +25,26 @@ public class GameScene : Scene
         GameOver,
     }
 
-    private const string DUNGEON_TEXT = "Dungeon";
-    private const string SLIME_TEXT = "Slime";
-    private const string PRESS_ENTER_TEXT = "Press Enter To Start";
-    private const string EQUIPMENT_PRO_LOCATION = "Fonts/EquipmentPro";
-    private const string COMPASS_PRO_LOCATION = "Fonts/CompassPro";
-    private const string REPEATING_BACKGROUND_LOCATION = "Images/background-pattern";
-    private const string UI_SOUND_EFFECT_LOCATION = "Sounds/Click_15";
-    private const string CUSTOM_FONT_FILE = "Fonts/04b_30.fnt";
+    private const float TileMapScale = 4.0f;
+    private const float FadeSpeed = .02f;
     private const string ATLAS_DEFINITION_LOCATION = "Images/atlas-definition.xml";
     private const string TilemapDefinitionLocation = "Images/tilemap-definition.xml";
     private const string TileMapSlimeAnimation = "slime-animation";
     private const string TileMapBatAnimation = "bat-animation";
-    private const float TileMapScale = 4.0f;
     private const string BounceSoundEffectLocation = "Sounds/bounce";
     private const string CollectSoundEffectLocation = "Sounds/collect";
+    private const string GrayScaleEffectLocation = "Effects/GrayScaleEffect";
+
     #endregion
 
     #region Fields
+
+    // The grayscale shader effect
+    private Effect _grayScaleEffect;
+
+    // The amount of saturation to provide the grayscale shader effect
+    private float _saturation = 1.0f;
+
     // Reference to the slime.
     private Slime _slime;
 
@@ -61,6 +64,7 @@ public class GameScene : Scene
     private int _score;
     private GameSceneUI _ui;
     private GameState _state;
+
     #endregion
 
     #region Public Methods
@@ -93,14 +97,19 @@ public class GameScene : Scene
         SoundEffect bounceSoundEffect = ContentManager.Load<SoundEffect>(BounceSoundEffectLocation);
         _collectSoundEffect = ContentManager.Load<SoundEffect>(CollectSoundEffectLocation);
         _bat = new Bat(batAnimation, bounceSoundEffect);
+        _grayScaleEffect = ContentManager.Load<Effect>(GrayScaleEffectLocation);
     }
 
     public override void Update(GameTime gameTime)
     {
         _ui.Update(gameTime);
-        if (_state == GameState.GameOver)
+        if (_state != GameState.Playing)
         {
-            return;
+            _saturation = Math.Max(0.0f, _saturation - FadeSpeed);
+            if (_state == GameState.GameOver)
+            {
+                return;
+            }
         }
 
         if (GameController.Pause())
@@ -112,6 +121,7 @@ public class GameScene : Scene
         {
             return;
         }
+
         _slime.Update(gameTime);
         _bat.Update(gameTime);
         CollisionChecks();
@@ -121,7 +131,16 @@ public class GameScene : Scene
     {
         // Clear the back buffer
         Core.GraphicsDevice.Clear(Color.MonoGameOrange);
-        Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        if (_state != GameState.Playing)
+        {
+            _grayScaleEffect.Parameters["Saturation"].SetValue(_saturation);
+            Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        }
+        else
+        {
+            Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        }
+
         _tilemap.Draw(Core.SpriteBatch);
         _slime.Draw();
         _bat.Draw();
@@ -130,10 +149,12 @@ public class GameScene : Scene
     }
 
     #endregion
+
     #region Private Methods
 
     private void InitializeUI()
-    { // Clear out any previous UI element just in case we came from a different scene
+    {
+        // Clear out any previous UI element just in case we came from a different scene
         GumService.Default.Root.Children.Clear();
         // Create a new UI instance
         _ui = new GameSceneUI();
@@ -182,6 +203,7 @@ public class GameScene : Scene
         {
             _ui.ShowPausePanel();
             _state = GameState.Paused;
+            _saturation = 1.0f;
         }
     }
 
@@ -199,6 +221,7 @@ public class GameScene : Scene
             _ui.UpdateScoreText(_score);
             Core.Audio.PlaySoundEffect(_collectSoundEffect);
         }
+
         if (
             slimeBounds.Top < _roomBounds.Top
             || slimeBounds.Bottom > _roomBounds.Bottom
@@ -209,6 +232,7 @@ public class GameScene : Scene
             GameOver();
             return;
         }
+
         if (batBounds.Top < _roomBounds.Top)
         {
             _bat.Bounce(Vector2.UnitY);
@@ -314,6 +338,7 @@ public class GameScene : Scene
     {
         _ui.ShowGameOverPanel();
         _state = GameState.GameOver;
+        _saturation = 1.0f;
     }
 
     #endregion

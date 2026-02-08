@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Effects/GrayScaleEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/GrayScaleEffect.fx
+
 #begin Fonts/04b_30.fnt
 /copy:Fonts/04b_30.fnt
 
